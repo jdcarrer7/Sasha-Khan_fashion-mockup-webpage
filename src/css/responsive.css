@@ -1,0 +1,276 @@
+/**
+ * Sasha Khan — Responsive Styles
+ * Mobile-first responsive breakpoints
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   BREAKPOINT REFERENCE
+   ═══════════════════════════════════════════════════════════
+
+   Mobile: 0 - 767px
+   Tablet: 768px - 1023px
+   Desktop: 1024px - 1439px
+   Large Desktop: 1440px+
+
+   ═══════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE STYLES (Default)
+   ═══════════════════════════════════════════════════════════ */
+
+/* On mobile, stack triangles vertically */
+@media (max-width: 767px) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-triangle {
+    position: relative;
+    width: 100%;
+    height: 25vh;
+    min-height: 150px;
+    clip-path: none !important;
+  }
+
+  .hero-triangle--top {
+    order: 1;
+  }
+
+  .hero-triangle--left {
+    order: 2;
+  }
+
+  .hero-triangle--right {
+    order: 3;
+  }
+
+  .hero-triangle--bottom {
+    order: 4;
+  }
+
+  /* Adjust content positioning for mobile */
+  .hero-triangle__content {
+    top: 50% !important;
+    left: 50% !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .hero-triangle__title {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    letter-spacing: var(--letter-spacing-ultra);
+  }
+
+  /* Logo positioning for mobile */
+  .hero-logo {
+    position: fixed;
+    top: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+  }
+
+  .hero-logo__image {
+    width: 80px;
+  }
+
+  /* Hide decorative lines on mobile */
+  .hero-decorative-lines,
+  .hero-diagonal-svg {
+    display: none;
+  }
+
+  /* Hide scroll indicator on mobile */
+  .hero-scroll-indicator {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-triangle__title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  .hero-logo__image {
+    width: clamp(100px, 12vw, 150px);
+  }
+
+  /* Adjust title positions for tablet */
+  .hero-triangle--top .hero-triangle__content {
+    top: 18%;
+  }
+
+  .hero-triangle--bottom .hero-triangle__content {
+    bottom: 18%;
+  }
+
+  .hero-triangle--left .hero-triangle__content {
+    left: 12%;
+  }
+
+  .hero-triangle--right .hero-triangle__content {
+    right: 12%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DESKTOP STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .hero-triangle__title {
+    font-size: clamp(2rem, 2.5vw, 3rem);
+  }
+
+  /* Slightly larger logo on desktop */
+  .hero-logo__image {
+    width: clamp(150px, 12vw, 200px);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LARGE DESKTOP STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 1440px) {
+  .hero-triangle__title {
+    font-size: 3rem;
+    letter-spacing: 0.4em;
+  }
+
+  .hero-logo__image {
+    width: 200px;
+  }
+
+  /* More generous spacing for large screens */
+  .hero-triangle--top .hero-triangle__content {
+    top: 12%;
+  }
+
+  .hero-triangle--bottom .hero-triangle__content {
+    bottom: 12%;
+  }
+
+  .hero-triangle--left .hero-triangle__content {
+    left: 18%;
+  }
+
+  .hero-triangle--right .hero-triangle__content {
+    right: 18%;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ULTRA-WIDE SCREENS
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 2000px) {
+  .hero-triangle__title {
+    font-size: 3.5rem;
+  }
+
+  .hero-logo__image {
+    width: 250px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEIGHT-BASED ADJUSTMENTS
+   ═══════════════════════════════════════════════════════════ */
+
+/* Short viewports (laptop screens) */
+@media (max-height: 700px) and (min-width: 768px) {
+  .hero-triangle__title {
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
+  }
+
+  .hero-logo__image {
+    width: clamp(80px, 10vw, 120px);
+  }
+
+  .hero-scroll-indicator {
+    bottom: var(--space-md);
+  }
+
+  .hero-scroll-indicator__line {
+    height: 25px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOUCH DEVICE HANDLING
+   ═══════════════════════════════════════════════════════════ */
+
+@media (hover: none) and (pointer: coarse) {
+  /* On touch devices, don't dim other sections */
+  .hero-triangle.is-dimmed .hero-triangle__overlay {
+    opacity: 0;
+  }
+
+  .hero-triangle.is-dimmed .hero-triangle__title {
+    opacity: 1;
+  }
+
+  /* Add tap indicator */
+  .hero-triangle--video::after {
+    content: '';
+    position: absolute;
+    bottom: var(--space-md);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--color-ivory);
+    border-radius: 50%;
+    opacity: 0.5;
+    z-index: 20;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LANDSCAPE MOBILE
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .hero-triangle {
+    position: relative;
+    height: 50vh;
+    min-height: 200px;
+    clip-path: none !important;
+  }
+
+  .hero-logo {
+    position: fixed;
+    top: var(--space-sm);
+    width: 60px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HIGH DPI / RETINA DISPLAYS
+   ═══════════════════════════════════════════════════════════ */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Sharper text shadows on retina */
+  .hero-triangle__title {
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  /* Thinner decorative lines */
+  .hero-diagonal-svg line {
+    stroke-width: 0.5;
+  }
+}

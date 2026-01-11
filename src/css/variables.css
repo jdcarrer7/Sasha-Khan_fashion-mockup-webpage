@@ -1,0 +1,130 @@
+/**
+ * Sasha Khan — Design System Variables
+ * Ultra-Luxurious Fashion Brand
+ */
+
+:root {
+  /* ═══════════════════════════════════════════════════════════
+     COLOR PALETTE
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Primary Colors */
+  --color-noir: #0A0A0A;
+  --color-ivory: #F8F6F2;
+  --color-champagne-gold: #D4AF37;
+  --color-platinum: #E5E4E2;
+
+  /* Semantic Colors */
+  --color-background: var(--color-noir);
+  --color-text-primary: var(--color-ivory);
+  --color-text-secondary: var(--color-platinum);
+  --color-accent: var(--color-champagne-gold);
+
+  /* Overlay Colors */
+  --color-overlay-dark: rgba(10, 10, 10, 0.7);
+  --color-overlay-light: rgba(248, 246, 242, 0.1);
+
+  /* ═══════════════════════════════════════════════════════════
+     TYPOGRAPHY
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Font Families */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-heading: 'Bebas Neue', 'Impact', sans-serif;
+  --font-body: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+
+  /* Font Weights */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Font Sizes — Fluid Typography */
+  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --font-size-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --font-size-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);
+  --font-size-lg: clamp(1.125rem, 1rem + 0.6vw, 1.25rem);
+  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
+  --font-size-2xl: clamp(1.5rem, 1.25rem + 1.25vw, 2rem);
+  --font-size-3xl: clamp(2rem, 1.5rem + 2.5vw, 3rem);
+  --font-size-4xl: clamp(2.5rem, 2rem + 2.5vw, 4rem);
+  --font-size-5xl: clamp(3rem, 2rem + 5vw, 6rem);
+  --font-size-hero: clamp(3.5rem, 2.5rem + 6vw, 8rem);
+
+  /* Letter Spacing */
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+  --letter-spacing-wider: 0.1em;
+  --letter-spacing-ultra: 0.2em;
+  --letter-spacing-extreme: 0.35em;
+
+  /* Line Heights */
+  --line-height-tight: 1.1;
+  --line-height-snug: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ═══════════════════════════════════════════════════════════
+     SPACING
+     ═══════════════════════════════════════════════════════════ */
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+  --space-2xl: 8rem;
+  --space-3xl: 12rem;
+
+  /* ═══════════════════════════════════════════════════════════
+     TRANSITIONS & ANIMATIONS
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Easing Functions */
+  --ease-luxury: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 800ms;
+  --duration-reveal: 1200ms;
+
+  /* ═══════════════════════════════════════════════════════════
+     LAYOUT
+     ═══════════════════════════════════════════════════════════ */
+
+  --container-max-width: 1440px;
+  --container-padding: clamp(1rem, 5vw, 4rem);
+
+  /* ═══════════════════════════════════════════════════════════
+     BORDERS & SHADOWS
+     ═══════════════════════════════════════════════════════════ */
+
+  --border-thin: 1px solid var(--color-platinum);
+  --border-decorative: 1px solid rgba(212, 175, 55, 0.3);
+
+  /* Shadows */
+  --shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --shadow-elevated: 0 10px 40px rgba(0, 0, 0, 0.3);
+  --shadow-glow-gold: 0 0 30px rgba(212, 175, 55, 0.3);
+  --shadow-glow-soft: 0 0 60px rgba(212, 175, 55, 0.15);
+
+  /* Text Shadows */
+  --text-shadow-subtle: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --text-shadow-strong: 0 4px 20px rgba(0, 0, 0, 0.8);
+
+  /* ═══════════════════════════════════════════════════════════
+     Z-INDEX SCALE
+     ═══════════════════════════════════════════════════════════ */
+
+  --z-base: 1;
+  --z-above: 10;
+  --z-overlay: 100;
+  --z-modal: 1000;
+  --z-tooltip: 2000;
+}

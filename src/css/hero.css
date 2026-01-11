@@ -1,0 +1,307 @@
+/**
+ * Sasha Khan — Hero Section Styles
+ * Diagonal Triangle Layout with Interactive Videos
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   HERO CONTAINER
+   ═══════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--color-noir);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRIANGLE SECTIONS — BASE STYLES
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-triangle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition:
+    opacity var(--duration-slow) var(--ease-luxury),
+    filter var(--duration-slow) var(--ease-luxury),
+    transform var(--duration-slow) var(--ease-luxury);
+}
+
+/* Triangle Clip Paths */
+.hero-triangle--top {
+  clip-path: polygon(0 0, 100% 0, 50% 50%);
+  z-index: 2;
+}
+
+.hero-triangle--bottom {
+  clip-path: polygon(50% 50%, 0 100%, 100% 100%);
+  z-index: 2;
+}
+
+.hero-triangle--left {
+  clip-path: polygon(0 0, 50% 50%, 0 100%);
+  z-index: 2;
+}
+
+.hero-triangle--right {
+  clip-path: polygon(100% 0, 50% 50%, 100% 100%);
+  z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRIANGLE MEDIA — VIDEOS & IMAGES
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-triangle__media {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+/* Video-specific styling */
+.hero-triangle__video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Image-specific styling */
+.hero-triangle__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRIANGLE OVERLAY — For dimming effect
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-triangle__overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-noir);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--duration-slow) var(--ease-luxury);
+  z-index: 5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TRIANGLE CONTENT — TITLES
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-triangle__content {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Position titles within each triangle */
+.hero-triangle--top .hero-triangle__content {
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-triangle--bottom .hero-triangle__content {
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hero-triangle--left .hero-triangle__content {
+  top: 50%;
+  left: 15%;
+  transform: translateY(-50%);
+}
+
+.hero-triangle--right .hero-triangle__content {
+  top: 50%;
+  right: 15%;
+  transform: translateY(-50%);
+}
+
+/* Title Styling */
+.hero-triangle__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-ivory);
+  letter-spacing: var(--letter-spacing-extreme);
+  text-transform: uppercase;
+  text-shadow: var(--text-shadow-strong);
+  white-space: nowrap;
+  opacity: 0;
+  animation: fadeInTitle 1.2s var(--ease-luxury) forwards;
+  animation-delay: 0.8s;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HOVER & INTERACTION STATES
+   ═══════════════════════════════════════════════════════════ */
+
+/* Dimmed state for non-active sections */
+.hero-triangle.is-dimmed .hero-triangle__overlay {
+  opacity: 0.7;
+}
+
+.hero-triangle.is-dimmed .hero-triangle__title {
+  opacity: 0.3;
+}
+
+/* Active state for hovered section */
+.hero-triangle.is-active {
+  z-index: 15;
+}
+
+.hero-triangle.is-active .hero-triangle__title {
+  text-shadow:
+    var(--text-shadow-strong),
+    0 0 40px rgba(212, 175, 55, 0.3);
+}
+
+/* Cursor pointer for interactive triangles */
+.hero-triangle--video {
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CENTER LOGO
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.hero-logo__image {
+  width: clamp(100px, 15vw, 200px);
+  height: auto;
+  filter: drop-shadow(var(--shadow-glow-gold));
+  animation: logoGlow 4s ease-in-out infinite alternate;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DECORATIVE DIAGONAL LINES
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-decorative-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.hero-decorative-lines::before,
+.hero-decorative-lines::after {
+  content: '';
+  position: absolute;
+  background: linear-gradient(
+    to bottom right,
+    transparent 0%,
+    rgba(212, 175, 55, 0.2) 50%,
+    transparent 100%
+  );
+}
+
+/* Diagonal line from top-left to bottom-right */
+.hero-decorative-lines::before {
+  top: 0;
+  left: 0;
+  width: 141.42%;
+  height: 1px;
+  transform-origin: top left;
+  transform: rotate(calc(atan(100vh / 100vw)));
+  /* Fallback for browsers without atan support */
+  transform: rotate(45deg);
+}
+
+/* Diagonal line from top-right to bottom-left */
+.hero-decorative-lines::after {
+  top: 0;
+  right: 0;
+  width: 141.42%;
+  height: 1px;
+  transform-origin: top right;
+  transform: rotate(-45deg);
+}
+
+/* SVG-based diagonal lines (more precise) */
+.hero-diagonal-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 50;
+}
+
+.hero-diagonal-svg line {
+  stroke: rgba(212, 175, 55, 0.25);
+  stroke-width: 1;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL INDICATOR
+   ═══════════════════════════════════════════════════════════ */
+
+.hero-scroll-indicator {
+  position: absolute;
+  bottom: var(--space-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  opacity: 0;
+  animation: fadeIn 1s var(--ease-luxury) forwards;
+  animation-delay: 2s;
+}
+
+.hero-scroll-indicator__text {
+  font-family: var(--font-body);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-light);
+  letter-spacing: var(--letter-spacing-wider);
+  text-transform: uppercase;
+  color: var(--color-platinum);
+}
+
+.hero-scroll-indicator__line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    var(--color-champagne-gold),
+    transparent
+  );
+  animation: scrollPulse 2s ease-in-out infinite;
+}
