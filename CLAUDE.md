@@ -152,3 +152,53 @@ python3 -m http.server 8000
 - Firefox 88+
 - Safari 14+
 - Edge 90+
+
+---
+
+## CRITICAL: Do Not Modify (Desktop Safari Fixes)
+
+The following settings are carefully calibrated for desktop Safari. **DO NOT CHANGE** without testing thoroughly.
+
+### 1. Horizontal Overflow Prevention (main.css)
+
+```css
+html {
+  overscroll-behavior-x: none;
+}
+
+body {
+  overflow-x: clip;  /* NOT 'hidden' - breaks sticky positioning */
+  overscroll-behavior-x: none;
+}
+```
+
+**Why:** Elements using `translateX(100vw)` for off-screen positioning extend document width. Using `overflow-x: clip` (not `hidden`) prevents horizontal scroll while preserving `position: sticky` functionality.
+
+### 2. Clothing Section Anchor (index.html)
+
+The `#clothing-section` anchor must be positioned at `top: 100vh` within the catwalk section:
+
+```html
+<div id="clothing-section" style="position: absolute; top: 100vh; left: 0; height: 1px; width: 1px;"></div>
+```
+
+**Why:** The clothing container uses `translateX(100vw)` and is inside a sticky container. Placing the anchor on the transformed element causes incorrect scroll positioning. The anchor at `top: 100vh` lands where the horizontal scroll completes and 3 models are visible.
+
+### 3. Horizontal Scroll Transforms (catwalk.js, clothing.css)
+
+Keep `translateX(100vw)` in:
+- `clothing.css` line 21: `.clothing__container { transform: translateX(100vw); }`
+- `catwalk.js` lines 92, 100: Dynamic transform calculations
+
+**Why:** These control the horizontal scroll-reveal animation. The `100vw` unit is intentional for viewport-width positioning.
+
+### 4. LUX Product Names (products.css)
+
+```css
+.products-container--lux .product-card__name {
+  position: relative;
+  top: 6.7vh;
+}
+```
+
+**Why:** Moves only LUX product names (Lune, Ulysse, Xéline) down without affecting ODE names or DETAILS buttons.

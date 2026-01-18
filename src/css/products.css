@@ -162,6 +162,12 @@
   object-fit: contain;
 }
 
+/* LUX product names - positioned lower */
+.products-container--lux .product-card__name {
+  position: relative;
+  top: 6.7vh;
+}
+
 /* ═══════════════════════════════════════════════════════════
    DETAIL BUTTON — Elegant minimal style
    ═══════════════════════════════════════════════════════════ */

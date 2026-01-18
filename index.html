@@ -23,16 +23,16 @@
 
   <!-- Stylesheets -->
   <link rel="stylesheet" href="src/css/variables.css?v=3">
-  <link rel="stylesheet" href="src/css/main.css?v=10">
-  <link rel="stylesheet" href="src/css/hero.css?v=16">
+  <link rel="stylesheet" href="src/css/main.css?v=12">
+  <link rel="stylesheet" href="src/css/hero.css?v=18">
   <link rel="stylesheet" href="src/css/animations.css?v=2">
   <link rel="stylesheet" href="src/css/responsive.css?v=2">
   <link rel="stylesheet" href="src/css/cities.css?v=3">
   <link rel="stylesheet" href="src/css/luxury.css?v=3">
   <link rel="stylesheet" href="src/css/bags.css?v=3">
-  <link rel="stylesheet" href="src/css/products.css?v=9">
+  <link rel="stylesheet" href="src/css/products.css?v=18">
   <link rel="stylesheet" href="src/css/catwalk.css?v=1">
-  <link rel="stylesheet" href="src/css/clothing.css?v=12">
+  <link rel="stylesheet" href="src/css/clothing.css?v=14">
   <link rel="stylesheet" href="src/css/glasses.css?v=9">
   <link rel="stylesheet" href="src/css/world-press.css?v=2">
   <link rel="stylesheet" href="src/css/contact.css?v=4">
@@ -565,7 +565,7 @@
       </video>
 
       <!-- Clothing triptych - sweep in from right as video exits left -->
-      <div class="clothing__container" id="clothing-section">
+      <div class="clothing__container">
 
         <!-- FREEDOM Panel -->
         <article class="clothing-panel" data-collection="freedom" aria-label="Freedom Collection">
@@ -619,6 +619,8 @@
 
       </div>
     </div>
+    <!-- Anchor for clothing section - positioned at 100vh (where horizontal scroll completes) -->
+    <div id="clothing-section" style="position: absolute; top: 100vh; left: 0; height: 1px; width: 1px;"></div>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -799,7 +801,7 @@
   <script src="src/js/cities.js"></script>
   <script src="src/js/bags.js"></script>
   <script src="src/js/products.js"></script>
-  <script src="src/js/catwalk.js"></script>
+  <script src="src/js/catwalk.js?v=3"></script>
   <script src="src/js/glasses.js?v=11"></script>
   <script src="src/js/graffiti.js"></script>
   <script src="src/js/contact.js"></script>
