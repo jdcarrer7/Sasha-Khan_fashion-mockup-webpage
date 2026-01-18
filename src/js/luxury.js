@@ -45,6 +45,7 @@ class LuxuryCardsController {
 
   /**
    * Preload all videos for smooth playback
+   * Forces Chrome to actually buffer video data
    */
   preloadVideos() {
     this.luxuryCards.forEach(card => {
@@ -52,7 +53,14 @@ class LuxuryCardsController {
       const videos = card.querySelectorAll('video');
       videos.forEach(video => {
         if (video) {
+          // Force load
           video.load();
+
+          // Once metadata is loaded, seek to force Chrome to buffer
+          video.addEventListener('loadedmetadata', () => {
+            // Seek to near start to force Chrome to buffer video data
+            video.currentTime = 0.001;
+          }, { once: true });
         }
       });
     });
