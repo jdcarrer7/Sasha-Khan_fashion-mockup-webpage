@@ -269,6 +269,18 @@
      Based on: ISSUE_0006_Image breaking hero section on tablet
      ═══════════════════════════════════════════════════════════ */
 
+  /* 0. Force GPU compositing on all triangles - ensures clip-path works consistently */
+  .hero-triangle {
+    transform: translateZ(0) !important;
+    -webkit-transform: translateZ(0) !important;
+  }
+
+  /* 0b. Bottom image: adjust position and remove overflow-causing transform */
+  .hero-triangle--bottom .hero-triangle__image {
+    transform: translateY(30%) translateZ(0) !important;
+    -webkit-transform: translateY(30%) translateZ(0) !important;
+  }
+
   /* 1. Disable ALL transitions on triangle elements */
   .hero-triangle,
   .hero-triangle *,
@@ -284,12 +296,19 @@
     display: none !important;
   }
 
-  /* 3. Force stable state on ALL triangles regardless of classes */
+  /* 3. Force stable state on ALL triangles regardless of classes - ALL same z-index */
   .hero-triangle,
   .hero-triangle.is-dimmed,
   .hero-triangle.is-active {
     opacity: 1 !important;
     filter: none !important;
+    z-index: 2 !important;
+  }
+
+  /* Force same z-index even during sequence - prevents overlap */
+  body.tablet-sequence-active .hero-triangle,
+  body.tablet-sequence-active .hero-triangle.is-active,
+  body.tablet-sequence-active .hero-triangle.is-dimmed {
     z-index: 2 !important;
   }
 
@@ -326,6 +345,40 @@
     margin: 0 !important;
     overflow: hidden !important;
   }
+
+  /* ═══════════════════════════════════════════════════════════
+     TABLET SEQUENCE ANIMATION
+     When body has .tablet-sequence-active, allow dimming effects
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Show overlay on dimmed triangles during sequence */
+  body.tablet-sequence-active .hero-triangle.is-dimmed .hero-triangle__overlay {
+    display: block !important;
+    opacity: 0.7 !important;
+    background: rgba(10, 10, 10, 0.7) !important;
+  }
+
+  /* Dim title on non-active triangles during sequence */
+  body.tablet-sequence-active .hero-triangle.is-dimmed .hero-triangle__title {
+    opacity: 0.3 !important;
+  }
+
+  /* Active triangle - NO z-index change, keep all triangles on same plane */
+  /* z-index removed to prevent overlap - clip-path handles visibility */
+
+  /* Keep active triangle fully visible */
+  body.tablet-sequence-active .hero-triangle.is-active .hero-triangle__overlay {
+    display: none !important;
+    opacity: 0 !important;
+  }
+
+  body.tablet-sequence-active .hero-triangle.is-active .hero-triangle__title {
+    opacity: 1 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     VIDEO POSITIONING - Alignment adjustments for tablet
+     ═══════════════════════════════════════════════════════════ */
 
   /* FREEDOM (top) triangle video - shift up 2% */
   .hero-triangle--top .hero-triangle__video,
@@ -462,6 +515,12 @@
     padding: var(--space-sm) 0 0 0;
     display: none;
     text-align: center;
+    /* Position absolute to prevent layout shift */
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 100%;
   }
 
   .tablet-nav__item--has-submenu.is-expanded .tablet-nav__submenu {

@@ -482,8 +482,24 @@ class TabletSequenceController {
       triangle.classList.remove('is-active', 'is-dimmed');
     });
 
-    // Pause all videos
+    // Pause all videos and restore loop attribute for desktop
     this.pauseAllVideos();
+    this.restoreVideoLoops();
+  }
+
+  /**
+   * Restore loop attribute on all videos (for desktop mode)
+   */
+  restoreVideoLoops() {
+    this.sequence.forEach(item => {
+      if (item.type === 'video') {
+        const triangle = document.querySelector(item.selector);
+        const video = triangle?.querySelector('video');
+        if (video) {
+          video.setAttribute('loop', '');
+        }
+      }
+    });
   }
 
   /**
@@ -548,6 +564,9 @@ class TabletSequenceController {
     if (current.type === 'video') {
       const video = currentTriangle.querySelector('video');
       if (video) {
+        // Remove loop attribute so video ends and triggers 'ended' event
+        video.removeAttribute('loop');
+
         // Reset to beginning
         video.currentTime = 0;
 
@@ -624,9 +643,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize video controller (handles desktop hover behavior)
   new HeroVideoController();
 
-  // DISABLED: Tablet sequence controller causes layout instability
-  // TODO: Fix TabletSequenceController before re-enabling
-  // new TabletSequenceController();
+  // Tablet sequence controller - plays videos in sequence on tablet landscape
+  new TabletSequenceController();
 
   // Initialize logo parallax
   new LogoParallax();

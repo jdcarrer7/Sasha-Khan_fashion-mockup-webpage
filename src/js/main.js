@@ -144,13 +144,21 @@ class TabletMenuController {
       });
     }
 
-    // Submenu toggle
+    // Submenu toggle - accordion behavior (only one open at a time)
     this.submenuItems.forEach(item => {
       const label = item.querySelector('.tablet-nav__label');
       if (label) {
         label.addEventListener('click', (e) => {
           e.preventDefault();
-          item.classList.toggle('is-expanded');
+          const isCurrentlyExpanded = item.classList.contains('is-expanded');
+
+          // Collapse all submenus first
+          this.submenuItems.forEach(other => other.classList.remove('is-expanded'));
+
+          // Toggle the clicked one (only expand if it wasn't already open)
+          if (!isCurrentlyExpanded) {
+            item.classList.add('is-expanded');
+          }
         });
       }
     });
@@ -163,6 +171,14 @@ class TabletMenuController {
             !this.bottomTriangle?.contains(e.target)) {
           this.closeMenu();
         }
+      }
+    });
+
+    // Close menu when tapping the dark overlay (not the menu text)
+    this.tabletNav.addEventListener('click', (e) => {
+      // Only close if clicking directly on the nav overlay, not on menu items
+      if (e.target === this.tabletNav) {
+        this.closeMenu();
       }
     });
 
