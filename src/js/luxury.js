@@ -11,7 +11,8 @@
 class LuxuryCardsController {
   constructor() {
     this.bagsSection = document.querySelector('.bags-intro');
-    this.bagsVideo = document.querySelector('.bags-intro__video');
+    this.desktopVideo = document.querySelector('.bags-intro__video--desktop');
+    this.tabletPortraitVideo = document.querySelector('.bags-intro__video--tablet-portrait');
     this.luxuryCards = document.querySelectorAll('.luxury-card');
 
     // LUX and ODE product containers
@@ -24,6 +25,17 @@ class LuxuryCardsController {
 
     // Tablet landscape detection (991px - 1200px)
     this.isTabletLandscape = () => window.innerWidth >= 991 && window.innerWidth <= 1200;
+
+    // Tablet portrait detection (768px - 990px)
+    this.isTabletPortrait = () => window.innerWidth >= 768 && window.innerWidth <= 990;
+
+    // Combined tablet detection for opacity fade
+    this.isTablet = () => this.isTabletLandscape() || this.isTabletPortrait();
+
+    // Select correct video based on viewport
+    this.bagsVideo = this.isTabletPortrait() && this.tabletPortraitVideo
+      ? this.tabletPortraitVideo
+      : this.desktopVideo;
 
     // Animation phase thresholds
     this.sweepEndProgress = 0.25;     // Cards locked in place by 25%
@@ -154,8 +166,8 @@ class LuxuryCardsController {
       const translateX = (1 - cardProgress) * 100;
       card.style.transform = `translateX(${translateX}vw)`;
 
-      // Tablet landscape only: fade in cards to hide bleeding into previous section
-      if (this.isTabletLandscape()) {
+      // Tablet only: fade in cards to hide bleeding into previous section
+      if (this.isTablet()) {
         // Fade from 0 to 1 as cards enter viewport (first 50% of card progress)
         const opacityProgress = Math.min(1, cardProgress * 2);
         card.style.opacity = opacityProgress;
@@ -394,7 +406,7 @@ class LuxuryCardsController {
       const odeVideo = card.querySelector('.luxury-card__video--ode');
 
       card.style.transform = 'translateX(100vw)';
-      card.style.opacity = this.isTabletLandscape() ? '0' : '1';
+      card.style.opacity = this.isTablet() ? '0' : '1';
       card.classList.remove('is-active');
 
       // Reset flip rotation

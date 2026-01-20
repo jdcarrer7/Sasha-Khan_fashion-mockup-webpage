@@ -7,7 +7,9 @@
 class GlassesController {
   constructor() {
     this.section = document.querySelector('.glasses');
-    this.video = document.querySelector('.glasses__video');
+    this.desktopVideo = document.querySelector('.glasses__video--desktop');
+    this.tabletPortraitVideo = document.querySelector('.glasses__video--tablet-portrait');
+    this.video = null; // Will be set based on viewport
     this.overlayLink = document.querySelector('.glasses__overlay-link');
 
     this.isReady = false;
@@ -17,7 +19,7 @@ class GlassesController {
     this.desktopVideoSrc = 'assets/videos/glasses/glasses.mp4';
     this.tabletVideoSrc = 'assets/videos/glasses/glasses-tablet.mp4';
 
-    if (this.section && this.video) {
+    if (this.section && (this.desktopVideo || this.tabletPortraitVideo)) {
       this.init();
     }
   }
@@ -30,9 +32,57 @@ class GlassesController {
   }
 
   /**
-   * Swap video source based on viewport
+   * Check if viewport is tablet portrait (768px - 990px)
+   */
+  isTabletPortrait() {
+    return window.innerWidth >= 768 && window.innerWidth <= 990;
+  }
+
+  /**
+   * Select the correct video element based on viewport
+   */
+  selectVideo() {
+    const wasVideo = this.video;
+
+    if (this.isTabletPortrait() && this.tabletPortraitVideo) {
+      this.video = this.tabletPortraitVideo;
+    } else if (this.desktopVideo) {
+      this.video = this.desktopVideo;
+    }
+
+    // If video changed, reinitialize
+    if (wasVideo !== this.video && this.video) {
+      this.isReady = false;
+      this.setupVideoListeners();
+    }
+  }
+
+  /**
+   * Setup video event listeners
+   */
+  setupVideoListeners() {
+    if (!this.video) return;
+
+    this.video.addEventListener('loadedmetadata', () => {
+      this.videoDuration = this.video.duration;
+      this.isReady = true;
+      this.updateVideoPosition();
+    });
+
+    // Fallback if metadata already loaded
+    if (this.video.readyState >= 1) {
+      this.videoDuration = this.video.duration;
+      this.isReady = true;
+      this.updateVideoPosition();
+    }
+  }
+
+  /**
+   * Swap video source based on viewport (for desktop/tablet landscape)
    */
   swapVideoSource() {
+    if (!this.video || this.isTabletPortrait()) return;
+
     const source = this.video.querySelector('source');
     if (!source) return;
 
@@ -51,30 +101,21 @@ class GlassesController {
    * Initialize the controller
    */
   init() {
-    // Swap video source for tablet landscape
+    // Select correct video based on viewport
+    this.selectVideo();
+
+    // Swap video source for tablet landscape (if not tablet portrait)
     this.swapVideoSource();
 
-    // Wait for video metadata to load
-    this.video.addEventListener('loadedmetadata', () => {
-      this.videoDuration = this.video.duration;
-      this.isReady = true;
-
-      // Set initial position
-      this.updateVideoPosition();
-    });
-
-    // Fallback if metadata already loaded
-    if (this.video.readyState >= 1) {
-      this.videoDuration = this.video.duration;
-      this.isReady = true;
-      this.updateVideoPosition();
-    }
+    // Setup video listeners
+    this.setupVideoListeners();
 
     // Setup scroll handler
     this.setupScrollHandler();
 
-    // Handle viewport resize (swap video if needed)
+    // Handle viewport resize
     window.addEventListener('resize', () => {
+      this.selectVideo();
       this.swapVideoSource();
     });
   }
@@ -128,8 +169,8 @@ class GlassesController {
     progress = Math.max(0, Math.min(1, progress));
 
     // Map progress to video time
-    // For tablet landscape, stop slightly before the end to prevent blank last frame
-    const maxTime = this.isTabletLandscape() ? this.videoDuration - 0.1 : this.videoDuration;
+    // For tablet landscape/portrait, stop slightly before the end to prevent blank last frame
+    const maxTime = (this.isTabletLandscape() || this.isTabletPortrait()) ? this.videoDuration - 0.1 : this.videoDuration;
     const targetTime = progress * maxTime;
 
     // Set video currentTime (this scrubs the video)

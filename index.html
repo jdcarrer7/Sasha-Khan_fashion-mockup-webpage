@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="src/css/main.css?v=13">
   <link rel="stylesheet" href="src/css/hero.css?v=18">
   <link rel="stylesheet" href="src/css/animations.css?v=2">
-  <link rel="stylesheet" href="src/css/responsive.css?v=83">
+  <link rel="stylesheet" href="src/css/responsive.css?v=84">
   <link rel="stylesheet" href="src/css/cities.css?v=3">
   <link rel="stylesheet" href="src/css/luxury.css?v=3">
   <link rel="stylesheet" href="src/css/bags.css?v=3">
@@ -229,6 +229,45 @@
       <span class="hero-scroll-indicator__line"></span>
     </div>
 
+    <!-- TABLET PORTRAIT ROW OVERLAYS (for dimming effect) -->
+    <div class="tp-row1-overlay" aria-hidden="true"></div>
+    <div class="tp-row3-overlay" aria-hidden="true"></div>
+
+    <!-- TABLET PORTRAIT MENU (visible only in tablet portrait 768-990px) -->
+    <nav class="tablet-portrait-menu" aria-label="Tablet portrait navigation">
+      <ul class="tablet-portrait-menu__list">
+        <!-- Carries with dropdown -->
+        <li class="tablet-portrait-menu__item tablet-portrait-menu__item--has-submenu">
+          <span class="tablet-portrait-menu__label">Carries</span>
+          <ul class="tablet-portrait-menu__submenu">
+            <li><a href="#" class="tablet-portrait-menu__link" data-scroll-target="lux">LUX</a></li>
+            <li><a href="#" class="tablet-portrait-menu__link" data-scroll-target="ode">ODE</a></li>
+          </ul>
+        </li>
+        <!-- Outwear with dropdown -->
+        <li class="tablet-portrait-menu__item tablet-portrait-menu__item--has-submenu">
+          <span class="tablet-portrait-menu__label">Outwear</span>
+          <ul class="tablet-portrait-menu__submenu">
+            <li><a href="freedom.html" class="tablet-portrait-menu__link">FREEDOM</a></li>
+            <li><a href="glamour.html" class="tablet-portrait-menu__link">GLAMOUR</a></li>
+            <li><a href="elite.html" class="tablet-portrait-menu__link">ELITE</a></li>
+          </ul>
+        </li>
+        <!-- Eyewear -->
+        <li class="tablet-portrait-menu__item">
+          <a href="xxvi-sion.html" class="tablet-portrait-menu__label">Eyewear</a>
+        </li>
+        <!-- Press -->
+        <li class="tablet-portrait-menu__item">
+          <a href="#world-press-section" class="tablet-portrait-menu__label">Press</a>
+        </li>
+        <!-- Contact -->
+        <li class="tablet-portrait-menu__item">
+          <a href="#contact-section" class="tablet-portrait-menu__label">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -312,9 +351,9 @@
        ═══════════════════════════════════════════════════════════ -->
   <section class="bags-intro" id="bags-intro-section" aria-label="Bags Introduction">
     <div class="bags-intro__video-container">
-      <!-- Keyhole Video -->
+      <!-- Keyhole Video - Desktop/Tablet Landscape -->
       <video
-        class="bags-intro__video"
+        class="bags-intro__video bags-intro__video--desktop"
         muted
         playsinline
         preload="auto"
@@ -322,6 +361,16 @@
       >
         <source src="assets/videos/bags/keyhole-h265.mp4" type="video/mp4; codecs=hvc1">
         <source src="assets/videos/bags/keyhole.mp4" type="video/mp4">
+      </video>
+      <!-- Keyhole Video - Tablet Portrait -->
+      <video
+        class="bags-intro__video bags-intro__video--tablet-portrait"
+        muted
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/videos/bags/keyhole-tablet-portrait.mp4" type="video/mp4">
       </video>
 
       <!-- LUX/ODE Flip Cards -->
@@ -661,14 +710,25 @@
        ═══════════════════════════════════════════════════════════ -->
   <section class="glasses" id="glasses-section" aria-label="Glasses Collection">
     <div class="glasses__video-container">
+      <!-- Desktop/Tablet Landscape Video -->
       <video
-        class="glasses__video"
+        class="glasses__video glasses__video--desktop"
         muted
         playsinline
         preload="auto"
         aria-hidden="true"
       >
         <source src="assets/videos/glasses/glasses.mp4" type="video/mp4">
+      </video>
+      <!-- Tablet Portrait Video -->
+      <video
+        class="glasses__video glasses__video--tablet-portrait"
+        muted
+        playsinline
+        preload="auto"
+        aria-hidden="true"
+      >
+        <source src="assets/videos/glasses/glasses-tablet-portrait.mp4" type="video/mp4">
       </video>
       <a href="xxvi-sion.html" class="glasses__overlay-link">
         <span class="glasses__overlay-text">20-XXVI-SION</span>
@@ -829,8 +889,8 @@
 
   <!-- Scripts -->
   <script src="src/js/main.js?v=19"></script>
-  <script src="src/js/hero.js?v=20"></script>
-  <script src="src/js/luxury.js?v=10"></script>
+  <script src="src/js/hero.js?v=22"></script>
+  <script src="src/js/luxury.js?v=11"></script>
   <script src="src/js/cities.js"></script>
   <script src="src/js/bags.js"></script>
   <script src="src/js/products.js?v=2"></script>

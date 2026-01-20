@@ -637,14 +637,324 @@ class TabletSequenceController {
 }
 
 /**
+ * Tablet Portrait Sequence Controller
+ * Plays videos in alternating rows sequence for tablet portrait (768px - 990px)
+ * Sequence: Row1:Freedom → Row3:Elite → Row1:Glamour → Row3:Freedom → Row1:Elite → Row3:Glamour → Repeat
+ */
+class TabletPortraitSequenceController {
+  constructor() {
+    this.isRunning = false;
+    this.currentIndex = 0;
+
+    // Video triangle selectors
+    this.triangles = {
+      freedom: document.querySelector('.hero-triangle--top'),
+      elite: document.querySelector('.hero-triangle--left'),
+      glamour: document.querySelector('.hero-triangle--right')
+    };
+
+    // Row overlay elements
+    this.row1Overlay = document.querySelector('.tp-row1-overlay');
+    this.row3Overlay = document.querySelector('.tp-row3-overlay');
+
+    // Define the 6-step sequence (alternating rows)
+    // playing: { row, video } - the video that plays
+    // waiting: { row, video } - the video that's paused and dimmed, ready for next turn
+    this.sequence = [
+      { playing: { row: 1, video: 'freedom' }, waiting: { row: 3, video: 'elite' } },   // Step 1
+      { playing: { row: 3, video: 'elite' }, waiting: { row: 1, video: 'glamour' } },   // Step 2
+      { playing: { row: 1, video: 'glamour' }, waiting: { row: 3, video: 'freedom' } }, // Step 3
+      { playing: { row: 3, video: 'freedom' }, waiting: { row: 1, video: 'elite' } },   // Step 4
+      { playing: { row: 1, video: 'elite' }, waiting: { row: 3, video: 'glamour' } },   // Step 5
+      { playing: { row: 3, video: 'glamour' }, waiting: { row: 1, video: 'freedom' } }  // Step 6
+    ];
+
+    this.boundAdvance = null;
+    this.init();
+  }
+
+  /**
+   * Check if viewport is tablet portrait (768px - 990px)
+   */
+  isTabletPortrait() {
+    return window.innerWidth >= 768 && window.innerWidth <= 990;
+  }
+
+  /**
+   * Initialize the controller
+   */
+  init() {
+    // Start if in tablet portrait viewport
+    if (this.isTabletPortrait()) {
+      this.startSequence();
+    }
+
+    // Handle viewport resize
+    window.addEventListener('resize', () => this.handleResize());
+
+    // Handle page visibility
+    document.addEventListener('visibilitychange', () => this.handleVisibility());
+
+    // Setup menu dropdown interactions
+    this.setupMenuDropdowns();
+  }
+
+  /**
+   * Setup menu dropdown toggle behavior
+   */
+  setupMenuDropdowns() {
+    const menuItems = document.querySelectorAll('.tablet-portrait-menu__item--has-submenu');
+
+    menuItems.forEach(item => {
+      const label = item.querySelector('.tablet-portrait-menu__label');
+
+      if (label) {
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Close other open menus
+          menuItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove('is-open');
+            }
+          });
+
+          // Toggle this menu
+          item.classList.toggle('is-open');
+        });
+      }
+    });
+
+    // Close menus when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.tablet-portrait-menu__item--has-submenu')) {
+        menuItems.forEach(item => item.classList.remove('is-open'));
+      }
+    });
+
+    // Handle scroll target links (LUX, ODE)
+    const scrollLinks = document.querySelectorAll('.tablet-portrait-menu__link[data-scroll-target]');
+    scrollLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = link.getAttribute('data-scroll-target');
+        // Close menu
+        document.querySelectorAll('.tablet-portrait-menu__item--has-submenu').forEach(item => {
+          item.classList.remove('is-open');
+        });
+        // Scroll to bags section
+        const bagsSection = document.getElementById('bags-intro-section');
+        if (bagsSection) {
+          bagsSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  }
+
+  /**
+   * Handle viewport resize
+   */
+  handleResize() {
+    if (this.isTabletPortrait() && !this.isRunning) {
+      this.startSequence();
+    } else if (!this.isTabletPortrait() && this.isRunning) {
+      this.stopSequence();
+    }
+  }
+
+  /**
+   * Handle page visibility changes
+   */
+  handleVisibility() {
+    if (!this.isTabletPortrait()) return;
+
+    if (document.hidden) {
+      this.pauseCurrentVideo();
+    } else if (this.isRunning) {
+      this.resumeCurrentVideo();
+    }
+  }
+
+  /**
+   * Start the sequence
+   */
+  startSequence() {
+    if (this.isRunning) return;
+
+    this.isRunning = true;
+    document.body.classList.add('tablet-portrait-active');
+
+    // Reset all triangles
+    this.resetAllTriangles();
+
+    // Start with step 0
+    this.currentIndex = 0;
+    this.playCurrentStep();
+  }
+
+  /**
+   * Stop the sequence
+   */
+  stopSequence() {
+    this.isRunning = false;
+    document.body.classList.remove('tablet-portrait-active');
+
+    // Reset all triangles and overlays
+    this.resetAllTriangles();
+
+    // Pause all videos and restore loop attribute
+    Object.values(this.triangles).forEach(triangle => {
+      if (triangle) {
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.pause();
+          video.setAttribute('loop', '');
+        }
+      }
+    });
+  }
+
+  /**
+   * Reset all triangles to hidden state
+   */
+  resetAllTriangles() {
+    Object.values(this.triangles).forEach(triangle => {
+      if (triangle) {
+        triangle.classList.remove('tp-row1-active', 'tp-row3-active');
+        const video = triangle.querySelector('video');
+        if (video) {
+          video.pause();
+          video.currentTime = 0;
+          video.removeEventListener('ended', this.boundAdvance);
+        }
+      }
+    });
+
+    // Reset overlays
+    if (this.row1Overlay) this.row1Overlay.classList.remove('is-dimmed');
+    if (this.row3Overlay) this.row3Overlay.classList.remove('is-dimmed');
+  }
+
+  /**
+   * Play the current step in the sequence
+   */
+  playCurrentStep() {
+    if (!this.isRunning) return;
+
+    const step = this.sequence[this.currentIndex];
+    const playingTriangle = this.triangles[step.playing.video];
+    const waitingTriangle = this.triangles[step.waiting.video];
+
+    if (!playingTriangle) return;
+
+    // Reset all triangles first
+    Object.values(this.triangles).forEach(t => {
+      if (t) {
+        t.classList.remove('tp-row1-active', 'tp-row3-active');
+        const v = t.querySelector('video');
+        if (v) {
+          v.pause();
+          v.removeEventListener('ended', this.boundAdvance);
+        }
+      }
+    });
+
+    // Position the PLAYING triangle in its row
+    if (step.playing.row === 1) {
+      playingTriangle.classList.add('tp-row1-active');
+      if (this.row1Overlay) this.row1Overlay.classList.remove('is-dimmed');
+    } else {
+      playingTriangle.classList.add('tp-row3-active');
+      if (this.row3Overlay) this.row3Overlay.classList.remove('is-dimmed');
+    }
+
+    // Position the WAITING triangle in its row (paused, with dimmed overlay)
+    if (waitingTriangle) {
+      if (step.waiting.row === 1) {
+        waitingTriangle.classList.add('tp-row1-active');
+        if (this.row1Overlay) this.row1Overlay.classList.add('is-dimmed');
+      } else {
+        waitingTriangle.classList.add('tp-row3-active');
+        if (this.row3Overlay) this.row3Overlay.classList.add('is-dimmed');
+      }
+
+      // Make sure waiting video is paused at start
+      const waitingVideo = waitingTriangle.querySelector('video');
+      if (waitingVideo) {
+        waitingVideo.pause();
+        waitingVideo.currentTime = 0;
+      }
+    }
+
+    // Play the active video
+    const video = playingTriangle.querySelector('video');
+    if (video) {
+      // Remove loop so 'ended' event fires
+      video.removeAttribute('loop');
+      video.currentTime = 0;
+
+      // Setup ended listener
+      this.boundAdvance = () => this.advanceSequence();
+      video.addEventListener('ended', this.boundAdvance, { once: true });
+
+      // Play
+      video.play().catch(err => console.log('Tablet portrait video play prevented:', err));
+    }
+  }
+
+  /**
+   * Advance to next step in sequence
+   */
+  advanceSequence() {
+    if (!this.isRunning) return;
+
+    // Move to next step (loop back to 0 after step 5)
+    this.currentIndex = (this.currentIndex + 1) % this.sequence.length;
+
+    // Play next step
+    this.playCurrentStep();
+  }
+
+  /**
+   * Pause the current video
+   */
+  pauseCurrentVideo() {
+    const step = this.sequence[this.currentIndex];
+    const triangle = this.triangles[step.playing.video];
+    if (triangle) {
+      const video = triangle.querySelector('video');
+      if (video) video.pause();
+    }
+  }
+
+  /**
+   * Resume the current video
+   */
+  resumeCurrentVideo() {
+    const step = this.sequence[this.currentIndex];
+    const triangle = this.triangles[step.playing.video];
+    if (triangle) {
+      const video = triangle.querySelector('video');
+      if (video) {
+        video.play().catch(err => console.log('Video resume prevented:', err));
+      }
+    }
+  }
+}
+
+/**
  * Initialize on DOM ready
  */
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize video controller (handles desktop hover behavior)
   new HeroVideoController();
 
-  // Tablet sequence controller - plays videos in sequence on tablet landscape
+  // Tablet landscape sequence controller - plays videos in sequence on tablet landscape
   new TabletSequenceController();
+
+  // Tablet portrait sequence controller - plays videos in alternating rows on tablet portrait
+  new TabletPortraitSequenceController();
 
   // Initialize logo parallax
   new LogoParallax();

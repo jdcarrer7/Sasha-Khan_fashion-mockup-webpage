@@ -7,14 +7,35 @@ class BagsController {
   constructor() {
     this.videoSection = document.querySelector('.bags-intro');
     this.videoContainer = document.querySelector('.bags-intro__video-container');
-    this.video = document.querySelector('.bags-intro__video');
+    this.desktopVideo = document.querySelector('.bags-intro__video--desktop');
+    this.tabletPortraitVideo = document.querySelector('.bags-intro__video--tablet-portrait');
+    this.video = null; // Will be set based on viewport
     this.bagShowcase = document.querySelector('.bag-showcase');
 
     this.isVideoPlaying = false;
     this.isInHorizontalScroll = false;
 
-    if (this.videoSection && this.video) {
+    if (this.videoSection && (this.desktopVideo || this.tabletPortraitVideo)) {
+      this.selectVideo();
       this.init();
+    }
+  }
+
+  /**
+   * Check if viewport is tablet portrait (768px - 990px)
+   */
+  isTabletPortrait() {
+    return window.innerWidth >= 768 && window.innerWidth <= 990;
+  }
+
+  /**
+   * Select the correct video element based on viewport
+   */
+  selectVideo() {
+    if (this.isTabletPortrait() && this.tabletPortraitVideo) {
+      this.video = this.tabletPortraitVideo;
+    } else if (this.desktopVideo) {
+      this.video = this.desktopVideo;
     }
   }
 

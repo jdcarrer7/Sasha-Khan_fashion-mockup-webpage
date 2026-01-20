@@ -574,6 +574,464 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   TABLET PORTRAIT ELEMENTS - Hidden by default
+   ═══════════════════════════════════════════════════════════ */
+
+.tablet-portrait-menu,
+.tp-row1-overlay,
+.tp-row3-overlay {
+  display: none;
+}
+
+/* Tablet portrait glasses video - hidden by default */
+.glasses__video--tablet-portrait {
+  display: none;
+}
+
+/* Tablet portrait keyhole video - hidden by default */
+.bags-intro__video--tablet-portrait {
+  display: none;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TABLET PORTRAIT (768px - 990px)
+   ═══════════════════════════════════════════════════════════ */
+
+@media (min-width: 768px) and (max-width: 990px) {
+  /* Show tablet portrait elements */
+  .tablet-portrait-menu,
+  .tp-row1-overlay,
+  .tp-row3-overlay {
+    display: flex;
+  }
+
+  .tp-row1-overlay,
+  .tp-row3-overlay {
+    display: block;
+  }
+  /* ═══════════════════════════════════════════════════════════
+     HERO SECTION - 3 Horizontal Rows Layout
+     Row 1 (top): Video area - 33.33vh
+     Row 2 (middle): Collections image + menu - 33.33vh
+     Row 3 (bottom): Video area - 33.33vh
+     ═══════════════════════════════════════════════════════════ */
+
+  .hero {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    display: block;
+    overflow: hidden;
+  }
+
+  /* Hide non-essential elements */
+  .hero-diagonal-svg,
+  .hero-scroll-indicator,
+  .hero-links,
+  .hero-triangle__title,
+  .hero-triangle__content,
+  .collections-menu {
+    display: none !important;
+  }
+
+  /* Hide tablet landscape menu elements */
+  .menu-button,
+  .tablet-nav {
+    display: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     VIDEO TRIANGLES - Repositioned as full-width rows
+     ═══════════════════════════════════════════════════════════ */
+
+  /* All video triangles: absolute, full width, hidden by default */
+  .hero-triangle--top,
+  .hero-triangle--left,
+  .hero-triangle--right {
+    position: absolute !important;
+    width: 100% !important;
+    height: 33.33vh !important;
+    clip-path: none !important;
+    left: 0 !important;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 5;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Video fills container */
+  .hero-triangle--top .hero-triangle__video,
+  .hero-triangle--left .hero-triangle__video,
+  .hero-triangle--right .hero-triangle__video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
+  }
+
+  /* Active video in Row 1 (top) */
+  .hero-triangle.tp-row1-active {
+    top: 0 !important;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Active video in Row 3 (bottom) */
+  .hero-triangle.tp-row3-active {
+    top: 66.67vh !important;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Disable all transforms on triangles */
+  .hero-triangle,
+  .hero-triangle * {
+    transform: none !important;
+  }
+
+  /* Freedom video - show upper portion */
+  .hero-triangle--top.tp-row1-active .hero-triangle__video,
+  .hero-triangle--top.tp-row3-active .hero-triangle__video {
+    object-position: center top !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ROW 2 - Collections Image (Middle Row)
+     ═══════════════════════════════════════════════════════════ */
+
+  .hero-triangle--bottom {
+    position: absolute !important;
+    top: 33.33vh !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 33.33vh !important;
+    clip-path: none !important;
+    z-index: 5;
+  }
+
+  .hero-triangle--bottom .hero-triangle__image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transform: none !important;
+  }
+
+  /* Permanent 33% opacity overlay on middle row (behind menu) */
+  .hero-triangle--bottom::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.33);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     ROW DIMMING OVERLAYS
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Row 1 overlay (when Row 3 is playing) */
+  .tp-row1-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 33.33vh;
+    background: rgba(0, 0, 0, 0.66);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .tp-row1-overlay.is-dimmed {
+    opacity: 1;
+  }
+
+  /* Row 3 overlay (when Row 1 is playing) */
+  .tp-row3-overlay {
+    position: absolute;
+    top: 66.67vh;
+    left: 0;
+    width: 100%;
+    height: 33.33vh;
+    background: rgba(0, 0, 0, 0.66);
+    z-index: 10;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .tp-row3-overlay.is-dimmed {
+    opacity: 1;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LOGO - Upper Left
+     ═══════════════════════════════════════════════════════════ */
+
+  .hero-logo {
+    position: fixed !important;
+    top: var(--space-md) !important;
+    left: var(--space-md) !important;
+    right: auto !important;
+    transform: none !important;
+    z-index: 100;
+  }
+
+  .hero-logo__image {
+    width: 80px !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     HOME BUTTON - Upper Right
+     ═══════════════════════════════════════════════════════════ */
+
+  .home-button {
+    position: fixed !important;
+    top: var(--space-md) !important;
+    right: var(--space-md) !important;
+    left: auto !important;
+    z-index: 100;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     TABLET PORTRAIT MENU - Horizontal in Middle Row
+     ═══════════════════════════════════════════════════════════ */
+
+  .tablet-portrait-menu {
+    position: absolute;
+    top: 33.33vh;
+    left: 0;
+    width: 100%;
+    height: 33.33vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .tablet-portrait-menu__list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0 var(--space-lg);
+    pointer-events: auto;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.6);
+  }
+
+  .tablet-portrait-menu__item {
+    position: relative;
+    text-align: center;
+  }
+
+  .tablet-portrait-menu__label {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-havana);
+    letter-spacing: var(--letter-spacing-wider);
+    text-transform: uppercase;
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    transition: color 0.3s var(--ease-luxury);
+    text-decoration: none;
+    background: transparent;
+    border: none;
+  }
+
+  .tablet-portrait-menu__label:hover {
+    color: var(--color-ivory);
+  }
+
+  /* Dropdown submenu */
+  .tablet-portrait-menu__submenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    list-style: none;
+    margin: 0;
+    padding: var(--space-xs) 0;
+    background: rgba(10, 10, 10, 0.6);
+    min-width: 120px;
+    display: none;
+    z-index: 30;
+  }
+
+  .tablet-portrait-menu__item--has-submenu.is-open .tablet-portrait-menu__submenu {
+    display: block;
+  }
+
+  .tablet-portrait-menu__link {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-havana);
+    letter-spacing: var(--letter-spacing-wide);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-sm);
+    text-align: center;
+    transition: color 0.3s var(--ease-luxury);
+  }
+
+  .tablet-portrait-menu__link:hover {
+    color: var(--color-ivory);
+  }
+
+  /* Dropdown arrow indicator */
+  .tablet-portrait-menu__item--has-submenu .tablet-portrait-menu__label::after {
+    content: ' ▾';
+    font-size: 8px;
+  }
+
+  .tablet-portrait-menu__item--has-submenu.is-open .tablet-portrait-menu__label::after {
+    content: ' ▴';
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CITIES SECTION - All 5 cards fit horizontally
+     ═══════════════════════════════════════════════════════════ */
+
+  .cities__container {
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    gap: var(--space-xs) !important;
+    padding: 0 var(--space-sm) !important;
+  }
+
+  .cities__card {
+    flex: 1 1 0 !important;
+    max-width: 18% !important;
+    min-width: 0 !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     LUX/ODE CARDS - Shift left for tablet portrait
+     ═══════════════════════════════════════════════════════════ */
+
+  .luxury-cards-container {
+    left: var(--space-xs) !important;
+    transform: translateX(-160px);
+  }
+
+  /* L card (front face of first card) - extra shift to -190px total */
+  .luxury-card[data-index="0"] .luxury-card__face--front {
+    transform: translateX(-30px) !important;
+  }
+
+  /* U card (front face of second card) - extra shift to -190px total */
+  .luxury-card[data-index="1"] .luxury-card__face--front {
+    transform: translateX(-30px) !important;
+  }
+
+  /* O card (back face of first card) - total -155px */
+  .luxury-card[data-index="0"] .luxury-card__face--back {
+    transform: rotateY(180deg) translateX(5px) !important;
+  }
+
+  /* D card (back face of second card) - total -165px */
+  .luxury-card[data-index="1"] .luxury-card__face--back {
+    transform: rotateY(180deg) translateX(-5px) !important;
+  }
+
+  /* E card (back face of third card) - total -171px */
+  .luxury-card[data-index="2"] .luxury-card__face--back {
+    transform: rotateY(180deg) translateX(-11px) !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     PRODUCT CARDS - Ensure names visible for tablet portrait
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Product info container - keep original positioning */
+  .product-card__info {
+    max-width: 25vw !important;
+  }
+
+  /* Product name image - ensure visible and lower position */
+  .product-card__name {
+    max-width: 120px !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+  }
+
+  /* Raise LUX product names without affecting buttons */
+  .products-container--lux .product-card__name {
+    transform: translateY(-3vh) !important;
+  }
+
+  /* Remove overflow hidden on product cards so names aren't clipped */
+  .product-card {
+    overflow: visible !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CLOTHING SECTION - Three Models (FREEDOM, GLAMOUR, ELITE)
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Freedom model - shift right */
+  .clothing-panel[data-collection="freedom"] .clothing-panel__image {
+    object-position: 80% top !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     GLASSES SECTION - Tablet Portrait Video
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Hide desktop video, show tablet portrait video */
+  .glasses__video--desktop {
+    display: none !important;
+  }
+
+  .glasses__video--tablet-portrait {
+    display: block !important;
+    object-position: 55% center !important;
+  }
+
+  /* Make entire glasses video tappable */
+  .glasses__overlay-link {
+    top: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    cursor: pointer;
+  }
+
+  .glasses__overlay-text {
+    display: none !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     KEYHOLE VIDEO - Tablet Portrait
+     ═══════════════════════════════════════════════════════════ */
+
+  /* Hide desktop video, show tablet portrait video */
+  .bags-intro__video--desktop {
+    display: none !important;
+  }
+
+  .bags-intro__video--tablet-portrait {
+    display: block !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    HIGH DPI / RETINA DISPLAYS
    ═══════════════════════════════════════════════════════════ */
 
