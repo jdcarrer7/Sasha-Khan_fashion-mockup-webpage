@@ -22,3 +22,7 @@ build/
 # Logs
 *.log
 npm-debug.log*
+
+# Assets now served from CDN
+assets/
+assets-compressed/
