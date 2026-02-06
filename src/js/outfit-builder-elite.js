@@ -6,70 +6,70 @@
 class EliteOutfitBuilder {
   constructor() {
     // Asset paths
-    this.basePath = 'assets/images/outfit-builder/elite';
+    this.basePath = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/elite';
 
     // Outfit data - items 2,3,4 are color variants grouped together
     this.outfits = [
       {
         id: 1,
         name: 'Tuxedo Dress in Grain de Poudre',
-        file: '1_TUXEDO DRESS IN GRAIN DE POUDRE.png',
-        comboFile: '1_TUXEDO DRESS IN GRAIN DE POUDRE_model.png',
+        file: '1_TUXEDO DRESS IN GRAIN DE POUDRE.webp',
+        comboFile: '1_TUXEDO DRESS IN GRAIN DE POUDRE_model.webp',
         description: 'A sophisticated tuxedo dress crafted from luxurious grain de poudre wool. Sharp tailoring meets feminine elegance in this powerful statement piece.',
         hasColorVariants: false
       },
       {
         id: 2,
         name: 'Boxy Dress in Stretch Silk',
-        file: '2_BOXY DRESS IN STRETCH SILK_BLACK.png',
-        comboFile: '2_BOXY DRESS IN STRETCH SILK_BLACK_model.png',
+        file: '2_BOXY DRESS IN STRETCH SILK_BLACK.webp',
+        comboFile: '2_BOXY DRESS IN STRETCH SILK_BLACK_model.webp',
         description: 'Modern boxy silhouette in sumptuous stretch silk. Available in three sophisticated colorways: classic black, romantic pink, and vibrant yellow.',
         hasColorVariants: true,
         currentColor: 'black',
         colorVariants: {
           black: {
-            file: '2_BOXY DRESS IN STRETCH SILK_BLACK.png',
-            comboFile: '2_BOXY DRESS IN STRETCH SILK_BLACK_model.png'
+            file: '2_BOXY DRESS IN STRETCH SILK_BLACK.webp',
+            comboFile: '2_BOXY DRESS IN STRETCH SILK_BLACK_model.webp'
           },
           pink: {
-            file: '3_BOXY DRESS IN STRETCH SILK_PINK.png',
-            comboFile: '3_BOXY DRESS IN STRETCH SILK_PINK_model.png'
+            file: '3_BOXY DRESS IN STRETCH SILK_PINK.webp',
+            comboFile: '3_BOXY DRESS IN STRETCH SILK_PINK_model.webp'
           },
           yellow: {
-            file: '4_BOXY DRESS IN STRETCH SILK_YELLOW.png',
-            comboFile: '4_BOXY DRESS IN STRETCH SILK_YELLOW_model.png'
+            file: '4_BOXY DRESS IN STRETCH SILK_YELLOW.webp',
+            comboFile: '4_BOXY DRESS IN STRETCH SILK_YELLOW_model.webp'
           }
         }
       },
       {
         id: 5,
         name: 'Lavallière Romper in Silk',
-        file: '5_LAVALLIERE ROMPER IN SILK.png',
-        comboFile: '5_LAVALLIERE ROMPER IN SILK_model.png',
+        file: '5_LAVALLIERE ROMPER IN SILK.webp',
+        comboFile: '5_LAVALLIERE ROMPER IN SILK_model.webp',
         description: 'Elegant romper featuring a romantic lavallière neckline in flowing silk. A modern interpretation of classic femininity.',
         hasColorVariants: false
       },
       {
         id: 6,
         name: 'Strapless Dress in Silk Satin',
-        file: '6_STRAPLESS DRESS IN SILK SATIN.png',
-        comboFile: '6_STRAPLESS DRESS IN SILK SATIN_model.png',
+        file: '6_STRAPLESS DRESS IN SILK SATIN.webp',
+        comboFile: '6_STRAPLESS DRESS IN SILK SATIN_model.webp',
         description: 'Timeless strapless silhouette in lustrous silk satin. The perfect canvas for showcasing refined elegance.',
         hasColorVariants: false
       },
       {
         id: 7,
         name: 'Wool Peacoat',
-        file: '7_WOOL PEACOAT.png',
-        comboFile: '7_WOOL PEACOAT_model.png',
+        file: '7_WOOL PEACOAT.webp',
+        comboFile: '7_WOOL PEACOAT_model.webp',
         description: 'Classic peacoat reimagined in premium wool. Structured shoulders and clean lines create commanding presence.',
         hasColorVariants: false
       },
       {
         id: 8,
         name: 'Strap Tank Dress in Crepe Jersey',
-        file: '8_STRAP TANK DRESS IN CREPE JERSEY.png',
-        comboFile: '8_STRAP TANK DRESS IN CREPE JERSEY_model.png',
+        file: '8_STRAP TANK DRESS IN CREPE JERSEY.webp',
+        comboFile: '8_STRAP TANK DRESS IN CREPE JERSEY_model.webp',
         description: 'Minimalist tank dress in fluid crepe jersey. Delicate straps frame the décolletage while the fabric drapes effortlessly.',
         hasColorVariants: false
       }
@@ -288,7 +288,7 @@ class EliteOutfitBuilder {
 
     // Update image
     image.classList.add('is-loading');
-    const src = `${this.basePath}/outfits/${outfit.file}`;
+    const src = `${this.basePath}/outfits/${encodeURIComponent(outfit.file)}`;
 
     const preloader = new Image();
     preloader.onload = () => {
@@ -332,7 +332,7 @@ class EliteOutfitBuilder {
     const outfit = this.outfits[this.selectedIndex];
 
     this.previewImage.classList.add('is-loading');
-    const src = `${this.basePath}/combo/${outfit.comboFile}`;
+    const src = `${this.basePath}/combo/${encodeURIComponent(outfit.comboFile)}`;
 
     const preloader = new Image();
     preloader.onload = () => {

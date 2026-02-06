@@ -42,16 +42,16 @@ class EyewearSection {
   }
 
   getFrameData() {
-    const basePath = `assets/images/glasses/${this.model}`;
-    const videoPath = `assets/videos/glasses/${this.model}`;
+    const basePath = `https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/glasses/${this.model}`;
+    const videoPath = `https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/${this.model}`;
 
     if (this.model === 'bianca') {
       return {
         1: {
           name: 'Soleil Transition',
           description: 'A refined clear frame equipped with advanced transition lenses that adapt smoothly to changing light. Lightweight construction and elegant curves blend innovation with understated luxury.',
-          modelingImage: `${basePath}/frame_modeling/Frame_1_Bianca.png`,
-          polarizedImage: `${basePath}/frame_modeling/Frame_1_Polarize_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frame_1_Bianca.webp`,
+          polarizedImage: `${basePath}/frame_modeling/Frame_1_Polarize_Bianca.webp`,
           transitionVideo: `${videoPath}/Frame_1_Polarize transition_Bianca.mp4`,
           modelVideo: `${videoPath}/Frames_1_Bianca.mp4`,
           hasTransition: true
@@ -59,37 +59,37 @@ class EyewearSection {
         2: {
           name: 'Nocturne Square',
           description: 'A bold square silhouette in polished black acetate, finished with softly tinted lenses for controlled contrast. Architectural lines deliver confident, statement-making sophistication.',
-          modelingImage: `${basePath}/frame_modeling/Frame_2_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frame_2_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_2_Bianca.mp4`
         },
         3: {
           name: 'Rouge Lumière',
           description: 'Translucent red acetate frames vibrant gradient lenses with striking depth. Designed to balance bold color with refined structure, this style radiates modern glamour.',
-          modelingImage: `${basePath}/frame_modeling/Frame_3_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frame_3_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_3_Bianca.mp4`
         },
         4: {
           name: 'Champagne Fade',
           description: 'Warm champagne-toned acetate meets softly shaded lenses for a luminous, elevated look. Subtle transparency and rounded proportions evoke timeless elegance.',
-          modelingImage: `${basePath}/frame_modeling/Frame_4_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frame_4_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_4_Bianca.mp4`
         },
         5: {
           name: 'Obsidian Icon',
           description: 'An oversized black frame accented with metallic signature detailing at the temples. Deep gradient lenses and commanding proportions create unmistakable luxury presence.',
-          modelingImage: `${basePath}/frame_modeling/Frames_5_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_5_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_5_Bianca.mp4`
         },
         6: {
           name: 'Rose Prism',
           description: 'Faceted blush acetate frames with angular contours offer a sculptural, fashion-forward silhouette. Light-catching transparency adds a refined yet playful sophistication.',
-          modelingImage: `${basePath}/frame_modeling/Frames_6_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_6_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_6_Bianca.mp4`
         },
         7: {
           name: 'Crystal Amber',
           description: 'A softly contoured crystal-clear frame warmed with amber undertones. Feminine curvature and minimalist detailing create an effortlessly chic everyday statement.',
-          modelingImage: `${basePath}/frame_modeling/Frames_7_Bianca.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_7_Bianca.webp`,
           modelVideo: `${videoPath}/Frames_7_Bianca.mp4`
         }
       };
@@ -99,8 +99,8 @@ class EyewearSection {
         1: {
           name: 'Éclipse Clear',
           description: 'A sculpted clear acetate frame paired with adaptive transition lenses that shift seamlessly from indoor clarity to outdoor protection. Clean geometry and technical refinement create an effortlessly modern essential.',
-          modelingImage: `${basePath}/frame_modeling/Frames_1_Kat.png`,
-          polarizedImage: `${basePath}/frame_modeling/Frames_1_Polarized_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_1_Kat.webp`,
+          polarizedImage: `${basePath}/frame_modeling/Frames_1_Polarized_Kat.webp`,
           transitionVideo: `${videoPath}/Frames_1_Polarized transition_Kat.mp4`,
           modelVideo: `${videoPath}/Frames_1_Kat.mp4`,
           hasTransition: true
@@ -108,37 +108,37 @@ class EyewearSection {
         2: {
           name: 'Nocturne Square',
           description: 'A bold square silhouette in polished black acetate, finished with softly tinted lenses for controlled contrast. Architectural lines deliver confident, statement-making sophistication.',
-          modelingImage: `${basePath}/frame_modeling/Frames_2_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_2_Kat.webp`,
           modelVideo: `${videoPath}/Frames_2_Kat.mp4`
         },
         3: {
           name: 'Rouge Lumière',
           description: 'Translucent red acetate frames vibrant gradient lenses with striking depth. Designed to balance bold color with refined structure, this style radiates modern glamour.',
-          modelingImage: `${basePath}/frame_modeling/Frames_3_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_3_Kat.webp`,
           modelVideo: `${videoPath}/Frames_3_Kat.mp4`
         },
         4: {
           name: 'Champagne Fade',
           description: 'Warm champagne-toned acetate meets softly shaded lenses for a luminous, elevated look. Subtle transparency and rounded proportions evoke timeless elegance.',
-          modelingImage: `${basePath}/frame_modeling/Frames_4_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_4_Kat.webp`,
           modelVideo: `${videoPath}/Frames_4_Kat.mp4`
         },
         5: {
           name: 'Obsidian Icon',
           description: 'An oversized black frame accented with metallic signature detailing at the temples. Deep gradient lenses and commanding proportions create unmistakable luxury presence.',
-          modelingImage: `${basePath}/frame_modeling/Frames_5_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_5_Kat.webp`,
           modelVideo: `${videoPath}/Frames_5_Kat.mp4`
         },
         6: {
           name: 'Rose Prism',
           description: 'Faceted blush acetate frames with angular contours offer a sculptural, fashion-forward silhouette. Light-catching transparency adds a refined yet playful sophistication.',
-          modelingImage: `${basePath}/frame_modeling/Frames_6_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_6_Kat.webp`,
           modelVideo: `${videoPath}/Frames_6_Kat.mp4`
         },
         7: {
           name: 'Crystal Amber',
           description: 'A softly contoured crystal-clear frame warmed with amber undertones. Feminine curvature and minimalist detailing create an effortlessly chic everyday statement.',
-          modelingImage: `${basePath}/frame_modeling/Frames_7_Kat.png`,
+          modelingImage: `${basePath}/frame_modeling/Frames_7_Kat.webp`,
           modelVideo: `${videoPath}/Frames_7_Kat.mp4`
         }
       };

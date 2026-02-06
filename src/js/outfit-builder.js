@@ -6,23 +6,23 @@
 class OutfitBuilder {
   constructor() {
     // Asset paths
-    this.basePath = 'assets/images/outfit-builder/freedom';
+    this.basePath = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/freedom';
 
     // Item data
     this.tops = [
-      { code: 'A', name: 'White Satin Blouse', file: 'A_white satin blouse.png', description: 'A timeless white satin blouse with a luxurious sheen. Features a relaxed silhouette with delicate button closures, perfect for elegant day-to-evening transitions.' },
-      { code: 'B', name: 'Blouse in Silk Georgette', file: 'B_White, BLOUSE IN SILK GEORGETTE .png', description: 'Ethereal white blouse crafted from flowing silk georgette. The lightweight fabric drapes beautifully, creating an air of effortless sophistication.' },
-      { code: 'C', name: 'Brown Blouse in Taffeta', file: 'C_Brown Blouse in taffeta.png', description: 'Rich brown taffeta blouse with structured elegance. The crisp fabric creates beautiful volume while maintaining a refined silhouette.' },
-      { code: 'D', name: 'Black Blouse in Taffeta', file: 'D_Black, blouse in taffeta.png', description: 'Dramatic black taffeta blouse with bold presence. Perfect for making a statement with its architectural form and luxurious texture.' },
-      { code: 'E', name: 'Boxy Lavallière Top in Organza', file: 'E_BOXY LAVALLIÈRE TOP IN ORGANZA.png', description: 'Modern boxy silhouette meets romantic lavallière detailing in delicate organza. A contemporary interpretation of classic femininity.' },
-      { code: 'F', name: 'Oversized Blouse in Lamé Velvet', file: 'F_OVERSIZED BLOUSE IN LAMÉ VELVET DOTTED SILK MUSLIN.png', description: 'Luxurious oversized blouse combining lamé velvet with dotted silk muslin. An opulent piece that captures light with every movement.' },
-      { code: 'G', name: 'Lavallière Blouse in Floral Silk', file: 'G_LAVALLIÈRE BLOUSE IN FLORAL SILK MUSLIN.png', description: 'Romantic lavallière blouse in exquisite floral silk muslin. Delicate botanical prints meet timeless elegance in this feminine masterpiece.' }
+      { code: 'A', name: 'White Satin Blouse', file: 'A_white satin blouse.webp', description: 'A timeless white satin blouse with a luxurious sheen. Features a relaxed silhouette with delicate button closures, perfect for elegant day-to-evening transitions.' },
+      { code: 'B', name: 'Blouse in Silk Georgette', file: 'B_White, BLOUSE IN SILK GEORGETTE .webp', description: 'Ethereal white blouse crafted from flowing silk georgette. The lightweight fabric drapes beautifully, creating an air of effortless sophistication.' },
+      { code: 'C', name: 'Brown Blouse in Taffeta', file: 'C_Brown Blouse in taffeta.webp', description: 'Rich brown taffeta blouse with structured elegance. The crisp fabric creates beautiful volume while maintaining a refined silhouette.' },
+      { code: 'D', name: 'Black Blouse in Taffeta', file: 'D_Black, blouse in taffeta.webp', description: 'Dramatic black taffeta blouse with bold presence. Perfect for making a statement with its architectural form and luxurious texture.' },
+      { code: 'E', name: 'Boxy Lavallière Top in Organza', file: 'E_BOXY LAVALLIÈRE TOP IN ORGANZA.webp', description: 'Modern boxy silhouette meets romantic lavallière detailing in delicate organza. A contemporary interpretation of classic femininity.' },
+      { code: 'F', name: 'Oversized Blouse in Lamé Velvet', file: 'F_OVERSIZED BLOUSE IN LAMÉ VELVET DOTTED SILK MUSLIN.webp', description: 'Luxurious oversized blouse combining lamé velvet with dotted silk muslin. An opulent piece that captures light with every movement.' },
+      { code: 'G', name: 'Lavallière Blouse in Floral Silk', file: 'G_LAVALLIÈRE BLOUSE IN FLORAL SILK MUSLIN.webp', description: 'Romantic lavallière blouse in exquisite floral silk muslin. Delicate botanical prints meet timeless elegance in this feminine masterpiece.' }
     ];
 
     this.bottoms = [
-      { code: '1', name: 'Paperbag-Waist Pencil Skirt in Coated Cotton', file: '1_Paperbag-Waist Pencil Skirt in Structured Coated Cotton.png', description: 'Structured pencil skirt with signature paperbag waist in coated cotton. The coating adds subtle sheen while the high waist creates a flattering silhouette.' },
-      { code: '2', name: 'Paperbag-Waist Pencil Skirt in Lambskin', file: '2_Paperbag-Waist Pencil Skirt in High-Gloss Lambskin Leather.png', description: 'Luxurious pencil skirt in high-gloss lambskin leather with paperbag waist. Ultra-soft leather meets contemporary design for maximum impact.' },
-      { code: '3', name: 'High-Waisted Pencil Skirt in Fluid Satin', file: '3_High-Waisted Pencil Skirt in Fluid Satin with Clean Tailoring.png', description: 'Impeccably tailored pencil skirt in fluid satin. Clean lines and a high waist create timeless elegance perfect for any occasion.' }
+      { code: '1', name: 'Paperbag-Waist Pencil Skirt in Coated Cotton', file: '1_Paperbag-Waist Pencil Skirt in Structured Coated Cotton.webp', description: 'Structured pencil skirt with signature paperbag waist in coated cotton. The coating adds subtle sheen while the high waist creates a flattering silhouette.' },
+      { code: '2', name: 'Paperbag-Waist Pencil Skirt in Lambskin', file: '2_Paperbag-Waist Pencil Skirt in High-Gloss Lambskin Leather.webp', description: 'Luxurious pencil skirt in high-gloss lambskin leather with paperbag waist. Ultra-soft leather meets contemporary design for maximum impact.' },
+      { code: '3', name: 'High-Waisted Pencil Skirt in Fluid Satin', file: '3_High-Waisted Pencil Skirt in Fluid Satin with Clean Tailoring.webp', description: 'Impeccably tailored pencil skirt in fluid satin. Clean lines and a high waist create timeless elegance perfect for any occasion.' }
     ];
 
     // Current selection state
@@ -113,7 +113,7 @@ class OutfitBuilder {
 
     // Update image with loading state
     image.classList.add('is-loading');
-    const newSrc = `${this.basePath}/${type}/${item.file}`;
+    const newSrc = `${this.basePath}/${type}/${encodeURIComponent(item.file)}`;
 
     const preloader = new Image();
     preloader.onload = () => {
@@ -141,10 +141,10 @@ class OutfitBuilder {
   updateComboImage() {
     const topCode = this.tops[this.currentTop].code;
     const bottomCode = this.bottoms[this.currentBottom].code;
-    const comboFile = `${bottomCode}+${topCode}.png`;
+    const comboFile = `${bottomCode}+${topCode}.webp`;
 
     this.previewImage.classList.add('is-loading');
-    const newSrc = `${this.basePath}/combo/${comboFile}`;
+    const newSrc = `${this.basePath}/combo/${encodeURIComponent(comboFile)}`;
 
     const preloader = new Image();
     preloader.onload = () => {

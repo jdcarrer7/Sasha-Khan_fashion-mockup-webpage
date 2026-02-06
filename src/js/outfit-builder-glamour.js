@@ -6,16 +6,16 @@
 class GlamourOutfitBuilder {
   constructor() {
     // Asset paths
-    this.basePath = 'assets/images/outfit-builder/glamour';
+    this.basePath = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/glamour';
 
     // Dress data
     this.dresses = [
-      { code: '1', name: 'Sequined Evening Gown', file: '1_Sequined Evening Gown.png', description: 'A breathtaking floor-length gown adorned with thousands of hand-sewn sequins. This masterpiece captures and reflects light with every movement, creating a mesmerizing effect perfect for red carpet moments.' },
-      { code: '2', name: 'Mini Dress in Knit', file: '2_mini dress in knit.png', description: 'Contemporary mini dress crafted from luxurious knit fabric. The body-conscious silhouette celebrates the feminine form while the premium knit ensures comfort and elegant drape.' },
-      { code: '3', name: 'Ruffled Dress in Silk Satin', file: '3_ruffled dress in silk satin.png', description: 'Romantic ruffled dress in sumptuous silk satin. Cascading ruffles create movement and drama, while the lustrous fabric adds timeless sophistication to this show-stopping piece.' },
-      { code: '4', name: 'Ruched Mini Dress in Leopard Tulle', file: '4_RUCHED MINI DRESS IN LEOPARD TULLE JERSEY.png', description: 'Bold and daring mini dress featuring ruched leopard tulle jersey. The strategic ruching flatters the figure while the leopard print makes an unforgettable statement.' },
-      { code: '5', name: 'V-Neck Dress in Embroidered Muslin', file: '5_V-NECK DRESS IN EMBROIDERED MUSLIN.png', description: 'Ethereal V-neck dress in delicately embroidered muslin. Intricate embroidery details elevate this feminine piece, perfect for garden parties and romantic evenings.' },
-      { code: '6', name: 'Backless Mini Dress in Sable', file: '6_BACKLESS MINI DRESS IN SABLE SAINT LAURENT.png', description: 'Seductive backless mini dress in luxurious sable. The dramatic open back creates allure while the premium fabric ensures an impeccable fit and finish.' }
+      { code: '1', name: 'Sequined Evening Gown', file: '1_Sequined Evening Gown.webp', description: 'A breathtaking floor-length gown adorned with thousands of hand-sewn sequins. This masterpiece captures and reflects light with every movement, creating a mesmerizing effect perfect for red carpet moments.' },
+      { code: '2', name: 'Mini Dress in Knit', file: '2_mini dress in knit.webp', description: 'Contemporary mini dress crafted from luxurious knit fabric. The body-conscious silhouette celebrates the feminine form while the premium knit ensures comfort and elegant drape.' },
+      { code: '3', name: 'Ruffled Dress in Silk Satin', file: '3_ruffled dress in silk satin.webp', description: 'Romantic ruffled dress in sumptuous silk satin. Cascading ruffles create movement and drama, while the lustrous fabric adds timeless sophistication to this show-stopping piece.' },
+      { code: '4', name: 'Ruched Mini Dress in Leopard Tulle', file: '4_RUCHED MINI DRESS IN LEOPARD TULLE JERSEY.webp', description: 'Bold and daring mini dress featuring ruched leopard tulle jersey. The strategic ruching flatters the figure while the leopard print makes an unforgettable statement.' },
+      { code: '5', name: 'V-Neck Dress in Embroidered Muslin', file: '5_V-NECK DRESS IN EMBROIDERED MUSLIN.webp', description: 'Ethereal V-neck dress in delicately embroidered muslin. Intricate embroidery details elevate this feminine piece, perfect for garden parties and romantic evenings.' },
+      { code: '6', name: 'Backless Mini Dress in Sable', file: '6_BACKLESS MINI DRESS IN SABLE SAINT LAURENT.webp', description: 'Seductive backless mini dress in luxurious sable. The dramatic open back creates allure while the premium fabric ensures an impeccable fit and finish.' }
     ];
 
     // Current selection
@@ -90,7 +90,7 @@ class GlamourOutfitBuilder {
     const nextBtn = this.carousel.querySelector('.outfit-carousel__arrow--next');
 
     carouselImage.classList.add('is-loading');
-    const dressSrc = `${this.basePath}/dresses/${dress.file}`;
+    const dressSrc = `${this.basePath}/dresses/${encodeURIComponent(dress.file)}`;
 
     const preloader1 = new Image();
     preloader1.onload = () => {
@@ -113,7 +113,7 @@ class GlamourOutfitBuilder {
 
     // Update preview image
     this.previewImage.classList.add('is-loading');
-    const comboSrc = `${this.basePath}/combo/${dress.code}.png`;
+    const comboSrc = `${this.basePath}/combo/${dress.code}.webp`;
 
     const preloader2 = new Image();
     preloader2.onload = () => {
