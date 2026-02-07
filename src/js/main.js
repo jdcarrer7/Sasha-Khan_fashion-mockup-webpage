@@ -255,11 +255,53 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize tablet menu controller
   new TabletMenuController();
 
+  // Initialize mobile collections menu (for mobile portrait)
+  initMobileCollectionsMenu();
+
   // Add page loaded indicator
   window.addEventListener('load', () => {
     document.body.classList.add('page-loaded');
   });
 });
+
+/**
+ * Mobile Collections Menu - Tap to toggle dropdowns
+ */
+function initMobileCollectionsMenu() {
+  const menuItems = document.querySelectorAll('.collections-menu__item--has-submenu');
+
+  menuItems.forEach(item => {
+    const label = item.querySelector('.collections-menu__label');
+    if (label) {
+      label.addEventListener('click', (e) => {
+        // Only on mobile portrait
+        if (window.innerWidth <= 767) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Close other open menus
+          menuItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove('is-open');
+            }
+          });
+
+          // Toggle this menu
+          item.classList.toggle('is-open');
+        }
+      });
+    }
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 767) {
+      if (!e.target.closest('.collections-menu__item--has-submenu')) {
+        menuItems.forEach(item => item.classList.remove('is-open'));
+      }
+    }
+  });
+}
 
 // Export utilities for potential use in other modules
 window.SashaKhanUtils = {

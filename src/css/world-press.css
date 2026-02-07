@@ -409,16 +409,120 @@
 
 @media (max-width: 480px) {
   .world-press__title {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .world-press__paragraph--dropcap::first-letter {
-    font-size: 3.5rem;
-    padding-right: var(--space-sm);
+    font-size: 3rem;
+    padding-right: var(--space-xs);
   }
 
   .world-press__pullquote p {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE PORTRAIT LAYOUT
+   Image centered at top, text fills width below
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .world-press {
+    min-height: auto;
+    padding: var(--space-lg) 0;
+  }
+
+  .world-press__container {
+    padding: 0 var(--space-md);
+  }
+
+  .world-press__header {
+    margin-bottom: var(--space-md);
+  }
+
+  .world-press__eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+  }
+
+  .world-press__title {
+    font-size: 1.75rem;
+  }
+
+  .world-press__editorial {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* Image at top, centered */
+  .world-press__column--hero {
+    order: 1;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .world-press__figure--hero {
+    align-items: center;
+    width: 100%;
+  }
+
+  .world-press__figure--hero .world-press__image-frame {
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .world-press__figure--hero .world-press__image-frame img {
+    max-height: 280px;
+    width: auto;
+  }
+
+  .world-press__figcaption {
+    text-align: center;
+    border-left: none;
+    padding-left: 0;
+    border-top: 2px solid var(--color-havana);
+    padding-top: var(--space-xs);
+    margin-top: var(--space-sm);
+  }
+
+  /* Text below, full width */
+  .world-press__column--text {
+    order: 2;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .world-press__paragraph {
+    font-size: var(--font-size-sm);
+    line-height: 1.7;
+    margin-bottom: var(--space-sm);
+  }
+
+  .world-press__paragraph--dropcap::first-letter {
+    font-size: 2.5rem;
+  }
+
+  .world-press__pullquote {
+    padding: var(--space-sm);
+    margin: var(--space-sm) 0;
+  }
+
+  .world-press__pullquote p {
+    font-size: 1rem;
+  }
+
+  .world-press__quote-mark {
+    font-size: 2.5rem;
+    top: -0.2em;
+  }
+
+  .world-press__closing {
+    padding-top: var(--space-sm);
+  }
+
+  .world-press__tagline {
+    font-size: var(--font-size-base);
   }
 }
 

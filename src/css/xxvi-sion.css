@@ -441,17 +441,104 @@
 
 @media (max-width: 480px) {
   .eyewear-carousel__item {
-    flex: 0 0 128px;
-    height: 72px; /* 16:9 ratio */
+    flex: 0 0 100px;
+    height: 56px; /* 16:9 ratio */
   }
 
   .eyewear-carousel__track {
-    max-width: 320px;
+    max-width: 280px;
+    gap: var(--space-xs);
   }
 
   .eyewear-carousel__transition-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .eyewear-carousel__arrow {
+    width: 32px;
+    height: 32px;
+  }
+
+  .eyewear-carousel__arrow svg {
     width: 16px;
     height: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE PORTRAIT (max-width: 767px)
+   Reduced glasses display size for mobile viewport
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .eyewear-section {
+    padding-top: 60px;
+  }
+
+  /* Reduce main display area height significantly */
+  .eyewear-display {
+    height: 35vh;
+    min-height: 200px;
+    max-height: 280px;
+  }
+
+  /* Zoom out the glasses image/video */
+  .eyewear-display__video,
+  .eyewear-display__image {
+    object-fit: contain;
+    object-position: center;
+    padding: var(--space-sm);
+    background: linear-gradient(180deg, #b8a07d 0%, #9a8567 50%, #7d6c52 100%);
+  }
+
+  /* Controls - horizontal at bottom, smaller */
+  .eyewear-controls {
+    top: auto;
+    bottom: var(--space-sm);
+    right: 50%;
+    transform: translateX(50%);
+    flex-direction: row;
+    gap: var(--space-sm);
+  }
+
+  .eyewear-controls__btn {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 10px;
+  }
+
+  /* Carousel - compact */
+  .eyewear-carousel {
+    padding: var(--space-sm);
+    gap: var(--space-xs);
+  }
+
+  .eyewear-carousel__wrapper {
+    max-width: 200px;
+  }
+
+  /* Info section - compact */
+  .eyewear-info {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .eyewear-info__name {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-xs);
+  }
+
+  .eyewear-info__description {
+    font-size: var(--font-size-xs);
+    line-height: 1.6;
+  }
+
+  /* Header adjustments */
+  .xxvi-header {
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .xxvi-header__title {
+    font-size: var(--font-size-sm);
   }
 }
 

@@ -49,6 +49,7 @@
 
   .hero-triangle--bottom {
     order: 4;
+    min-height: 200px;
   }
 
   /* Adjust content positioning for mobile */
@@ -87,6 +88,232 @@
   /* Hide scroll indicator on mobile */
   .hero-scroll-indicator {
     display: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     COLLECTIONS MENU - Mobile Portrait
+     Fully visible, mobile-friendly dropdown
+     ═══════════════════════════════════════════════════════════ */
+
+  .collections-menu {
+    position: relative !important;
+    width: 100%;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    padding: var(--space-xs) 0;
+    background: rgba(10, 10, 10, 0.8);
+  }
+
+  .collections-menu__list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    width: 100%;
+  }
+
+  .collections-menu__list::before,
+  .collections-menu__list::after {
+    display: none;
+  }
+
+  .collections-menu__item {
+    position: relative;
+  }
+
+  .collections-menu__label {
+    font-size: 11px;
+    padding: var(--space-xs) var(--space-sm);
+    letter-spacing: 0.1em;
+  }
+
+  /* Dropdown styling for mobile */
+  .collections-menu__submenu {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 120px;
+    background: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(196, 167, 125, 0.3);
+    display: none;
+  }
+
+  .collections-menu__item--has-submenu.is-open .collections-menu__submenu,
+  .collections-menu__item--has-submenu:focus-within .collections-menu__submenu {
+    display: block;
+  }
+
+  .collections-menu__submenu-header {
+    font-size: 10px;
+    padding: var(--space-xs);
+  }
+
+  .collections-menu__link {
+    font-size: 11px;
+    padding: var(--space-xs) var(--space-sm);
+  }
+
+  /* Dropdown arrow - change direction for mobile (opens upward) */
+  .collections-menu__item--has-submenu .collections-menu__label::after {
+    content: '▴' !important;
+  }
+
+  .collections-menu__item--has-submenu.is-open .collections-menu__label::after {
+    content: '▾' !important;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CLOTHING SECTION - Mobile Portrait
+     Vertical stacked layout, full-width images
+     ═══════════════════════════════════════════════════════════ */
+
+  .clothing__container {
+    flex-direction: column !important;
+    transform: translateX(0) !important;
+    position: relative !important;
+    height: auto !important;
+  }
+
+  .clothing-panel {
+    width: 100%;
+    height: 33.33vh;
+    min-height: 200px;
+  }
+
+  .clothing-panel__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .clothing-panel__btn {
+    width: auto;
+    min-width: 150px;
+    font-size: var(--font-size-lg);
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  /* Hide diagonal dividers on mobile */
+  .clothing-dividers {
+    display: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     CATWALK SECTION - Mobile Portrait
+     Disable horizontal scroll animation
+     ═══════════════════════════════════════════════════════════ */
+
+  .catwalk {
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  .catwalk__video-container {
+    position: relative !important;
+    height: 50vh !important;
+  }
+
+  .catwalk__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     WORLD PRESS - Mobile Portrait
+     Image at top center, text fills width
+     ═══════════════════════════════════════════════════════════ */
+
+  .world-press {
+    padding: var(--space-lg) 0;
+  }
+
+  .world-press__container {
+    padding: 0 var(--space-sm);
+  }
+
+  .world-press__header {
+    margin-bottom: var(--space-md);
+  }
+
+  .world-press__title {
+    font-size: 2rem;
+  }
+
+  .world-press__editorial {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  /* Hero image at top, centered */
+  .world-press__column--hero {
+    order: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .world-press__figure--hero .world-press__image-frame img {
+    max-height: 300px;
+    width: auto;
+    margin: 0 auto;
+  }
+
+  /* Text below, full width */
+  .world-press__column--text {
+    order: 2;
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .world-press__paragraph {
+    font-size: var(--font-size-sm);
+    text-align: left;
+  }
+
+  .world-press__pullquote {
+    padding: var(--space-md) var(--space-sm);
+    margin: var(--space-md) 0;
+  }
+
+  .world-press__pullquote p {
+    font-size: 1.1rem;
+  }
+
+  .world-press__quote-mark {
+    font-size: 3rem;
+  }
+
+  /* ═══════════════════════════════════════════════════════════
+     GLASSES SECTION - Mobile Portrait (Main Page)
+     Reduce zoom, fit model in viewport
+     ═══════════════════════════════════════════════════════════ */
+
+  .glasses {
+    height: 150vh !important;
+  }
+
+  .glasses__video-container {
+    height: 100vh !important;
+  }
+
+  .glasses__video {
+    object-fit: contain !important;
+    object-position: center !important;
+    background: var(--color-noir);
+  }
+
+  .glasses__overlay-link {
+    bottom: 10% !important;
+  }
+
+  .glasses__overlay-text {
+    font-size: var(--font-size-xl);
   }
 }
 
