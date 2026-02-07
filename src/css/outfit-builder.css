@@ -669,6 +669,163 @@
 }
 
 /* ═══════════════════════════════════════════════════════════
+   MOBILE PORTRAIT (max-width: 767px)
+   Clean, centered layout matching Skyfynd portfolio style
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 767px) {
+  .outfit-builder {
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: var(--space-xl);
+  }
+
+  /* Preview at top - model image centered */
+  .outfit-builder__preview {
+    flex: none;
+    height: auto;
+    min-height: 45vh;
+    padding: calc(60px + var(--space-md)) var(--space-md) var(--space-md);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .outfit-preview {
+    height: auto;
+    width: 100%;
+    max-width: 280px;
+    aspect-ratio: 9 / 16;
+    max-height: 50vh;
+  }
+
+  .outfit-preview__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  /* Selectors below preview */
+  .outfit-builder__selectors {
+    flex: none;
+    padding: var(--space-md);
+    padding-top: 0;
+    gap: var(--space-md);
+  }
+
+  .outfit-builder__selectors--single {
+    justify-content: flex-start;
+  }
+
+  /* Hint text */
+  .outfit-builder__hint {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--space-sm);
+  }
+
+  /* Carousel styling - cleaner for mobile */
+  .outfit-carousel {
+    gap: var(--space-xs);
+  }
+
+  .outfit-carousel__header {
+    margin-bottom: 0;
+  }
+
+  .outfit-carousel__label {
+    font-size: var(--font-size-base);
+  }
+
+  .outfit-carousel__container {
+    gap: var(--space-sm);
+  }
+
+  /* Carousel items - larger and more prominent */
+  .outfit-carousel__item {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border: 1px solid rgba(196, 167, 125, 0.5);
+  }
+
+  .outfit-carousel__item--large,
+  .outfit-carousel--large .outfit-carousel__item {
+    width: 220px;
+    height: 280px;
+  }
+
+  /* Navigation arrows - clean square style */
+  .outfit-carousel__arrow {
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: 1px solid var(--color-havana);
+  }
+
+  .outfit-carousel__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Item name */
+  .outfit-carousel__name {
+    font-size: var(--font-size-sm);
+    min-height: auto;
+    margin-top: var(--space-xs);
+  }
+
+  /* Color swatches */
+  .outfit-carousel__colors {
+    margin-top: var(--space-sm);
+  }
+
+  /* Description card */
+  .outfit-description {
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .outfit-description__title {
+    font-size: var(--font-size-lg);
+  }
+
+  .outfit-description__text {
+    font-size: var(--font-size-sm);
+  }
+
+  /* Header adjustments */
+  .outfit-header {
+    padding: var(--space-sm) var(--space-md);
+  }
+
+  .outfit-header__title {
+    font-size: var(--font-size-xl);
+  }
+
+  .outfit-header__logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .outfit-header__spacer {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Details button */
+  .outfit-carousel__details-btn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .outfit-carousel__details-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
    REDUCED MOTION
    ═══════════════════════════════════════════════════════════ */
 
