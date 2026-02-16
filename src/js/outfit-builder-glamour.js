@@ -6,7 +6,7 @@
 class GlamourOutfitBuilder {
   constructor() {
     // Asset paths
-    this.basePath = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/glamour';
+    this.basePath = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/glamour';
 
     // Dress data
     this.dresses = [

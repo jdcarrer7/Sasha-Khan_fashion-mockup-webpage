@@ -16,8 +16,8 @@ class GlassesController {
     this.videoDuration = 0;
 
     // Video paths (CDN)
-    this.desktopVideoSrc = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses.mp4';
-    this.tabletVideoSrc = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses-tablet.mp4';
+    this.desktopVideoSrc = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses.mp4';
+    this.tabletVideoSrc = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses-tablet.mp4';
 
     if (this.section && (this.desktopVideo || this.tabletPortraitVideo)) {
       this.init();

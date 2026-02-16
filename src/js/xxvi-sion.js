@@ -42,8 +42,8 @@ class EyewearSection {
   }
 
   getFrameData() {
-    const basePath = `https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/glasses/${this.model}`;
-    const videoPath = `https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/${this.model}`;
+    const basePath = `https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/glasses/${this.model}`;
+    const videoPath = `https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/${this.model}`;
 
     if (this.model === 'bianca') {
       return {

@@ -6,7 +6,7 @@
 class EliteOutfitBuilder {
   constructor() {
     // Asset paths
-    this.basePath = 'https://media-skyfynd.jdcarrero7.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/elite';
+    this.basePath = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/images/outfit-builder/elite';
 
     // Outfit data - items 2,3,4 are color variants grouped together
     this.outfits = [
