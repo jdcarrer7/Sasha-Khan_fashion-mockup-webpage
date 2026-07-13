@@ -14,6 +14,7 @@ class GlassesController {
 
     this.isReady = false;
     this.videoDuration = 0;
+    this.denseBlobUrl = null;
 
     // Video paths — desktop uses the dense-keyframe encode served from
     // the site itself (the CDN copy has a single keyframe, which makes
@@ -99,15 +100,36 @@ class GlassesController {
     const source = this.video.querySelector('source');
     if (!source) return;
 
-    const targetSrc = this.isTabletLandscape() ? this.tabletVideoSrc : this.desktopVideoSrc;
-    const currentSrc = source.getAttribute('src');
-
-    // Only swap if different
-    if (currentSrc !== targetSrc) {
-      this.isReady = false;
-      source.setAttribute('src', targetSrc);
-      this.video.load();
+    if (this.isTabletLandscape()) {
+      if (source.getAttribute('src') !== this.tabletVideoSrc) {
+        this.isReady = false;
+        source.setAttribute('src', this.tabletVideoSrc);
+        this.video.load();
+      }
+      return;
     }
+
+    // Desktop: dense-keyframe encode as a blob URL — fully seekable
+    // regardless of server Range support (Pages/basic servers may lack
+    // it, which leaves video.seekable empty and freezes scrubbing)
+    if (this.denseBlobUrl) {
+      if (source.getAttribute('src') !== this.denseBlobUrl) {
+        this.isReady = false;
+        source.setAttribute('src', this.denseBlobUrl);
+        this.video.load();
+      }
+      return;
+    }
+
+    fetch(this.desktopVideoSrc)
+      .then(res => res.ok ? res.blob() : Promise.reject(res.status))
+      .then(blob => {
+        this.denseBlobUrl = URL.createObjectURL(blob);
+        this.isReady = false;
+        source.setAttribute('src', this.denseBlobUrl);
+        this.video.load();
+      })
+      .catch(() => {}); // keep the CDN source on failure
   }
 
   /**

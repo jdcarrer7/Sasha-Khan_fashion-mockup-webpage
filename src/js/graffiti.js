@@ -31,11 +31,19 @@ class GraffitiController {
       this.updateVideoPosition();
     }
 
-    // Desktop scrubs this video hard — use the dense-keyframe encode
+    // Desktop scrubs this video hard — swap in the dense-keyframe encode
+    // as a blob URL (fully seekable regardless of server Range support)
     if (window.innerWidth > 1200 && window.innerHeight > 500) {
       const source = this.video.querySelector('source');
       if (source) {
-        source.setAttribute('src', 'media/scrub/sasha-graffiti-4.mp4');
+        fetch('media/scrub/sasha-graffiti-4.mp4')
+          .then(res => res.ok ? res.blob() : Promise.reject(res.status))
+          .then(blob => {
+            source.setAttribute('src', URL.createObjectURL(blob));
+            this.isReady = false;
+            this.video.load();
+          })
+          .catch(() => {}); // keep the CDN source on failure
       }
     }
 

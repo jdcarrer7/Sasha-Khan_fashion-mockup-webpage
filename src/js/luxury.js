@@ -97,7 +97,16 @@ class LuxuryCardsController {
           if (useDenseEncodes) {
             const letter = (video.getAttribute('src') || '').split('/').pop().replace('.mp4', '');
             if (/^[LUXODE]$/.test(letter)) {
-              video.src = `media/scrub/${letter}.mp4`;
+              // Load as a blob: blob URLs are fully seekable regardless of
+              // server Range support (Pages/basic servers may lack it,
+              // which leaves video.seekable empty and freezes scrubbing)
+              fetch(`media/scrub/${letter}.mp4`)
+                .then(res => res.ok ? res.blob() : Promise.reject(res.status))
+                .then(blob => {
+                  video.src = URL.createObjectURL(blob);
+                  video.load();
+                })
+                .catch(() => {}); // keep the CDN source on failure
             }
           }
 
