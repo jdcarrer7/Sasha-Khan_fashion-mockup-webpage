@@ -15,6 +15,15 @@ class BagsController {
     this.isVideoPlaying = false;
     this.isInHorizontalScroll = false;
 
+    // Auto-advance to LUX cards when the keyhole video finishes
+    this.videoEnded = false;
+    this.autoScrollDone = false;
+    this.autoScrollRaf = null;
+    this.autoScrollDelayTimer = null;
+    this.cancelAutoScroll = null;
+    this.lastSectionTop = null;
+    this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     if (this.videoSection && (this.desktopVideo || this.tabletPortraitVideo)) {
       this.selectVideo();
       this.init();
@@ -30,10 +39,17 @@ class BagsController {
   }
 
   /**
+   * Check if viewport is mobile portrait (width <= 767px, height > 500px)
+   */
+  isMobilePortrait() {
+    return window.innerWidth <= 767 && window.innerHeight > 500;
+  }
+
+  /**
    * Select the correct video element based on viewport
    */
   selectVideo() {
-    if (this.isTabletPortrait() && this.tabletPortraitVideo) {
+    if ((this.isTabletPortrait() || this.isMobilePortrait()) && this.tabletPortraitVideo) {
       this.video = this.tabletPortraitVideo;
     } else if (this.desktopVideo) {
       this.video = this.desktopVideo;
@@ -47,6 +63,7 @@ class BagsController {
     this.setupVideoObserver();
     this.setupShowcaseObserver();
     this.setupScrollHandler();
+    this.setupAutoAdvance();
 
     // Handle viewport resize/orientation change
     window.addEventListener('resize', () => {
@@ -102,6 +119,12 @@ class BagsController {
     const sectionHeight = this.videoSection.offsetHeight;
     const viewportHeight = window.innerHeight;
 
+    // Scrolling down onto a video that already finished → auto-advance
+    if (this.lastSectionTop !== null && sectionTop < this.lastSectionTop) {
+      this.maybeAutoAdvance();
+    }
+    this.lastSectionTop = sectionTop;
+
     // Calculate how far we've scrolled into the section
     // The section is 200vh, so the "scroll range" for horizontal effect is 100vh
     const scrollStart = 0; // When video fills viewport (sectionTop = 0)
@@ -152,6 +175,117 @@ class BagsController {
   }
 
   /**
+   * Auto-advance: when the keyhole video reaches its last frame while the
+   * viewer is watching it, smooth-scroll to the LUX cards on its own
+   */
+  setupAutoAdvance() {
+    [this.desktopVideo, this.tabletPortraitVideo].forEach(video => {
+      if (!video) return;
+
+      video.addEventListener('ended', () => {
+        if (video !== this.video) return;
+        this.videoEnded = true;
+        if (!document.hidden) {
+          this.maybeAutoAdvance();
+        }
+      });
+
+      // play() on an ended video restarts it from the top — re-arm
+      video.addEventListener('play', () => {
+        if (video !== this.video) return;
+        this.videoEnded = false;
+        this.autoScrollDone = false;
+      });
+    });
+
+    // The video may finish while the tab is hidden — advance on return
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        this.maybeAutoAdvance();
+      }
+    });
+  }
+
+  /**
+   * Auto-scroll only if the ended video still dominates the viewport
+   * and the viewer hasn't already scrolled into the card sweep zone
+   */
+  maybeAutoAdvance() {
+    if (!this.videoEnded || this.autoScrollDone || !this.video) return;
+
+    const sectionTop = this.videoSection.getBoundingClientRect().top;
+    const scrollRange = this.videoSection.offsetHeight - window.innerHeight;
+    if (scrollRange <= 0) return;
+
+    const progress = -sectionTop / scrollRange;
+    const videoDominatesViewport = sectionTop < window.innerHeight * 0.25;
+    const beforeCardZone = progress < 0.15;
+
+    if (videoDominatesViewport && beforeCardZone) {
+      this.autoScrollToCards(scrollRange);
+    }
+  }
+
+  /**
+   * Hold the final frame briefly, then glide to 25% section progress —
+   * where luxury.js locks the LUX cards fully in view.
+   * Any viewer input (wheel, touch, key, click) cancels the glide.
+   */
+  autoScrollToCards(scrollRange) {
+    this.autoScrollDone = true;
+
+    // No scroll hijacking for reduced-motion users
+    if (this.prefersReducedMotion) return;
+
+    const targetY = this.videoSection.offsetTop + scrollRange * 0.25;
+    const HOLD_MS = 400;
+    const GLIDE_MS = 1600;
+    const easeLuxury = t => 1 - Math.pow(1 - t, 5);
+    const cancelEvents = ['wheel', 'touchstart', 'keydown', 'mousedown'];
+
+    const cancel = () => {
+      if (this.autoScrollDelayTimer) {
+        clearTimeout(this.autoScrollDelayTimer);
+        this.autoScrollDelayTimer = null;
+      }
+      if (this.autoScrollRaf) {
+        cancelAnimationFrame(this.autoScrollRaf);
+        this.autoScrollRaf = null;
+      }
+      cancelEvents.forEach(evt => window.removeEventListener(evt, cancel));
+      this.cancelAutoScroll = null;
+    };
+
+    this.cancelAutoScroll = cancel;
+    cancelEvents.forEach(evt => {
+      window.addEventListener(evt, cancel, { passive: true });
+    });
+
+    this.autoScrollDelayTimer = setTimeout(() => {
+      this.autoScrollDelayTimer = null;
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+      if (distance <= 0) {
+        cancel();
+        return;
+      }
+
+      let startTime = null;
+      const step = (timestamp) => {
+        if (startTime === null) startTime = timestamp;
+        const t = Math.min((timestamp - startTime) / GLIDE_MS, 1);
+        window.scrollTo(0, startY + distance * easeLuxury(t));
+        if (t < 1) {
+          this.autoScrollRaf = requestAnimationFrame(step);
+        } else {
+          cancel();
+        }
+      };
+      this.autoScrollRaf = requestAnimationFrame(step);
+    }, HOLD_MS);
+  }
+
+  /**
    * Play the video
    */
   playVideo() {
@@ -191,6 +325,9 @@ class BagsController {
     }
     if (this.showcaseObserver) {
       this.showcaseObserver.disconnect();
+    }
+    if (this.cancelAutoScroll) {
+      this.cancelAutoScroll();
     }
   }
 }

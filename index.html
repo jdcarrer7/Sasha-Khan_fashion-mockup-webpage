@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="src/css/main.css?v=13">
   <link rel="stylesheet" href="src/css/hero.css?v=18">
   <link rel="stylesheet" href="src/css/animations.css?v=2">
-  <link rel="stylesheet" href="src/css/responsive.css?v=84">
+  <link rel="stylesheet" href="src/css/responsive.css?v=87">
   <link rel="stylesheet" href="src/css/cities.css?v=3">
   <link rel="stylesheet" href="src/css/luxury.css?v=3">
   <link rel="stylesheet" href="src/css/bags.css?v=3">
@@ -34,7 +34,7 @@
   <link rel="stylesheet" href="src/css/catwalk.css?v=1">
   <link rel="stylesheet" href="src/css/clothing.css?v=14">
   <link rel="stylesheet" href="src/css/glasses.css?v=9">
-  <link rel="stylesheet" href="src/css/world-press.css?v=2">
+  <link rel="stylesheet" href="src/css/world-press.css?v=6">
   <link rel="stylesheet" href="src/css/contact.css?v=4">
 
   <!-- Favicon (placeholder) -->
@@ -79,6 +79,39 @@
 
   <!-- Skip to main content link for accessibility -->
   <a href="#main-content" class="visually-hidden">Skip to main content</a>
+
+  <!-- Mobile Portrait Menu Button -->
+  <button class="mobile-portrait-menu-btn" aria-label="Open menu" aria-expanded="false">MENU</button>
+
+  <!-- Mobile Portrait Navigation Menu -->
+  <nav class="mobile-portrait-menu" aria-label="Mobile portrait navigation">
+    <ul class="mobile-portrait-menu__list">
+      <li class="mobile-portrait-menu__item mobile-portrait-menu__item--has-submenu">
+        <span class="mobile-portrait-menu__label">Carries</span>
+        <ul class="mobile-portrait-menu__submenu">
+          <li><a href="#" class="mobile-portrait-menu__link" data-scroll-target="lux">LUX</a></li>
+          <li><a href="#" class="mobile-portrait-menu__link" data-scroll-target="ode">ODE</a></li>
+        </ul>
+      </li>
+      <li class="mobile-portrait-menu__item mobile-portrait-menu__item--has-submenu">
+        <span class="mobile-portrait-menu__label">Outwear</span>
+        <ul class="mobile-portrait-menu__submenu">
+          <li><a href="elite.html" class="mobile-portrait-menu__link">ELITE</a></li>
+          <li><a href="freedom.html" class="mobile-portrait-menu__link">FREEDOM</a></li>
+          <li><a href="glamour.html" class="mobile-portrait-menu__link">GLAMOUR</a></li>
+        </ul>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="xxvi-sion.html" class="mobile-portrait-menu__label">Eyewear</a>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="#world-press-section" class="mobile-portrait-menu__label">Press</a>
+      </li>
+      <li class="mobile-portrait-menu__item">
+        <a href="#contact-section" class="mobile-portrait-menu__label">Contact</a>
+      </li>
+    </ul>
+  </nav>
 
   <!-- ═══════════════════════════════════════════════════════════
        HERO SECTION — Diagonal Triangle Layout
@@ -927,14 +960,15 @@
 
   <!-- Scripts -->
   <script src="src/js/main.js?v=19"></script>
-  <script src="src/js/hero.js?v=22"></script>
-  <script src="src/js/luxury.js?v=11"></script>
+  <script src="src/js/hero.js?v=24"></script>
+  <script src="src/js/luxury.js?v=12"></script>
   <script src="src/js/cities.js"></script>
-  <script src="src/js/bags.js"></script>
+  <script src="src/js/bags.js?v=3"></script>
   <script src="src/js/products.js?v=2"></script>
   <script src="src/js/catwalk.js?v=3"></script>
-  <script src="src/js/glasses.js?v=13"></script>
+  <script src="src/js/glasses.js?v=14"></script>
   <script src="src/js/graffiti.js"></script>
+  <script src="src/js/world-press.js?v=1"></script>
   <script src="src/js/contact.js"></script>
 </body>
 </html>
