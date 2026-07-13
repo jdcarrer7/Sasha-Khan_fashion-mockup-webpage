@@ -422,6 +422,42 @@
   }
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL REVEAL + PARALLAX (classes applied by world-press.js)
+   Without JS the markup never gets .wp-reveal, so content stays visible
+   ═══════════════════════════════════════════════════════════ */
+
+.wp-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity 0.9s var(--ease-luxury),
+    transform 0.9s var(--ease-luxury);
+  transition-delay: var(--wp-delay, 0s);
+}
+
+.wp-reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.wp-parallax {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .wp-parallax {
+    transform: none !important;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    MOBILE PORTRAIT LAYOUT
    Image centered at top, text fills width below
@@ -450,21 +486,46 @@
     font-size: 1.75rem;
   }
 
+  /* Editorial becomes a grid: the cover sits beside the pullquote,
+     between the two large text portions. The text column's children
+     are lifted into the grid; the hero column keeps its own box so
+     the parallax transform still applies to it. */
   .world-press__editorial {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "p1    p1"
+      "quote img"
+      "p2    p2"
+      "p3    p3";
+    align-items: center;
     gap: var(--space-md);
   }
 
-  /* Image at top, centered */
+  .world-press__column--text {
+    display: contents;
+  }
+
+  .world-press__paragraph--dropcap {
+    grid-area: p1;
+  }
+
+  .world-press__column--text > .world-press__paragraph:nth-of-type(2) {
+    grid-area: p2;
+  }
+
+  .world-press__column--text > .world-press__paragraph:nth-of-type(3) {
+    grid-area: p3;
+  }
+
+  /* Cover to the right of the quote — same size, not reduced */
   .world-press__column--hero {
-    order: 1;
+    grid-area: img;
     justify-content: center;
-    width: 100%;
   }
 
   .world-press__figure--hero {
     align-items: center;
-    width: 100%;
   }
 
   .world-press__figure--hero .world-press__image-frame {
@@ -486,13 +547,6 @@
     margin-top: var(--space-sm);
   }
 
-  /* Text below, full width */
-  .world-press__column--text {
-    order: 2;
-    max-width: 100%;
-    width: 100%;
-  }
-
   .world-press__paragraph {
     font-size: var(--font-size-sm);
     line-height: 1.7;
@@ -504,8 +558,9 @@
   }
 
   .world-press__pullquote {
+    grid-area: quote;
     padding: var(--space-sm);
-    margin: var(--space-sm) 0;
+    margin: 0;
   }
 
   .world-press__pullquote p {
