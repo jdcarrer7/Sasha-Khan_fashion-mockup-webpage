@@ -84,11 +84,23 @@ class LuxuryCardsController {
    * Forces Chrome to actually buffer video data
    */
   preloadVideos() {
+    // Desktop scrubs these videos hard; the CDN copies have a single
+    // keyframe, which makes every Chrome seek decode from frame zero.
+    // Swap in the dense-keyframe encodes served from the site itself.
+    const useDenseEncodes = window.innerWidth > 1200 && window.innerHeight > 500;
+
     this.luxuryCards.forEach(card => {
       // Preload both LUX and ODE videos
       const videos = card.querySelectorAll('video');
       videos.forEach(video => {
         if (video) {
+          if (useDenseEncodes) {
+            const letter = (video.getAttribute('src') || '').split('/').pop().replace('.mp4', '');
+            if (/^[LUXODE]$/.test(letter)) {
+              video.src = `media/scrub/${letter}.mp4`;
+            }
+          }
+
           // Force load
           video.load();
 
@@ -106,8 +118,14 @@ class LuxuryCardsController {
    * Setup scroll handler synced with bags-intro horizontal scroll
    */
   setupScrollHandler() {
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      this.handleScroll();
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        this.handleScroll();
+        ticking = false;
+      });
     }, { passive: true });
   }
 
@@ -242,6 +260,15 @@ class LuxuryCardsController {
   }
 
   /**
+   * Seek only when meaningfully different — avoids redundant decode work
+   */
+  seekTo(video, time) {
+    if (Math.abs(video.currentTime - time) > 0.05) {
+      video.currentTime = time;
+    }
+  }
+
+  /**
    * Phase 2: Animate flip from LUX to ODE with overlap
    * Cards flip one by one, next starts when current is 25% turned
    */
@@ -275,11 +302,11 @@ class LuxuryCardsController {
 
         // ODE video at end
         if (odeVideo && odeVideo.duration && !isNaN(odeVideo.duration)) {
-          odeVideo.currentTime = odeVideo.duration;
+          this.seekTo(odeVideo, odeVideo.duration);
         }
         // LUX video at start (reversed)
         if (luxVideo) {
-          luxVideo.currentTime = 0;
+          this.seekTo(luxVideo, 0);
         }
 
       } else if (clampedFlipProgress >= cardFlipStart) {
@@ -292,17 +319,17 @@ class LuxuryCardsController {
         if (cardProgress < 0.5 && luxVideo && luxVideo.duration && !isNaN(luxVideo.duration)) {
           // Reverse: from end (where it was) to start
           const luxProgress = 1 - (cardProgress / 0.5);
-          luxVideo.currentTime = luxProgress * luxVideo.duration;
+          this.seekTo(luxVideo, luxProgress * luxVideo.duration);
         } else if (luxVideo) {
-          luxVideo.currentTime = 0;
+          this.seekTo(luxVideo, 0);
         }
 
         // ODE video plays forward (second half of flip)
         if (cardProgress >= 0.5 && odeVideo && odeVideo.duration && !isNaN(odeVideo.duration)) {
           const odeProgress = (cardProgress - 0.5) / 0.5;
-          odeVideo.currentTime = odeProgress * odeVideo.duration;
+          this.seekTo(odeVideo, odeProgress * odeVideo.duration);
         } else if (odeVideo) {
-          odeVideo.currentTime = 0;
+          this.seekTo(odeVideo, 0);
         }
 
       } else {

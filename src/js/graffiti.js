@@ -31,6 +31,14 @@ class GraffitiController {
       this.updateVideoPosition();
     }
 
+    // Desktop scrubs this video hard — use the dense-keyframe encode
+    if (window.innerWidth > 1200 && window.innerHeight > 500) {
+      const source = this.video.querySelector('source');
+      if (source) {
+        source.setAttribute('src', 'media/scrub/sasha-graffiti-4.mp4');
+      }
+    }
+
     // Force video to load on mobile (browsers may not preload)
     this.video.load();
 

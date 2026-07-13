@@ -15,8 +15,10 @@ class GlassesController {
     this.isReady = false;
     this.videoDuration = 0;
 
-    // Video paths (CDN)
-    this.desktopVideoSrc = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses.mp4';
+    // Video paths — desktop uses the dense-keyframe encode served from
+    // the site itself (the CDN copy has a single keyframe, which makes
+    // Chrome scroll-scrubbing decode from frame zero on every seek)
+    this.desktopVideoSrc = 'media/scrub/glasses.mp4';
     this.tabletVideoSrc = 'https://media-skyfynd.skyfynd.workers.dev/Skyfynd%20Landing%20Page/Websites/Sasha%20Khan/assets/videos/glasses/glasses-tablet.mp4';
 
     if (this.section && (this.desktopVideo || this.tabletPortraitVideo)) {
