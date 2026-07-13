@@ -1,6 +1,6 @@
 /**
  * Sasha Khan — Elite Outfit Builder Controller
- * Features: Swipe navigation, click-to-select combo, color variants
+ * Features: Swipe/arrow navigation updates the model directly, color variants
  */
 
 class EliteOutfitBuilder {
@@ -26,6 +26,7 @@ class EliteOutfitBuilder {
         description: 'Modern boxy silhouette in sumptuous stretch silk. Available in three sophisticated colorways: classic black, romantic pink, and vibrant yellow.',
         hasColorVariants: true,
         currentColor: 'black',
+        defaultColor: 'black',
         colorVariants: {
           black: {
             file: '2_BOXY DRESS IN STRETCH SILK_BLACK.webp',
@@ -75,9 +76,8 @@ class EliteOutfitBuilder {
       }
     ];
 
-    // Current state
+    // Current state — the model preview always follows the carousel
     this.currentIndex = 0;
-    this.selectedIndex = 0; // The one showing in combo preview
 
     // Swipe tracking
     this.touchStartX = 0;
@@ -102,7 +102,6 @@ class EliteOutfitBuilder {
   init() {
     this.setupCarousel();
     this.setupSwipe();
-    this.setupClickToSelect();
     this.setupColorSwatches();
     this.setupDescriptionClose();
 
@@ -198,24 +197,6 @@ class EliteOutfitBuilder {
   }
 
   /**
-   * Setup click to select (updates combo image)
-   */
-  setupClickToSelect() {
-    const image = this.carousel.querySelector('.outfit-carousel__image');
-
-    image.addEventListener('click', () => {
-      this.selectedIndex = this.currentIndex;
-      this.updateComboImage();
-
-      // Visual feedback
-      this.carouselItem.classList.add('is-selected');
-      setTimeout(() => {
-        this.carouselItem.classList.remove('is-selected');
-      }, 300);
-    });
-  }
-
-  /**
    * Setup color swatch buttons
    */
   setupColorSwatches() {
@@ -245,11 +226,7 @@ class EliteOutfitBuilder {
       outfit.comboFile = outfit.colorVariants[color].comboFile;
 
       this.updateCarouselDisplay();
-
-      // Also update combo if this is the selected item
-      if (this.currentIndex === this.selectedIndex) {
-        this.updateComboImage();
-      }
+      this.updateComboImage();
     }
   }
 
@@ -262,7 +239,7 @@ class EliteOutfitBuilder {
   }
 
   /**
-   * Navigate carousel (does NOT update combo image)
+   * Navigate carousel — the model preview updates immediately
    */
   navigate(direction) {
     const newIndex = this.currentIndex + direction;
@@ -271,7 +248,17 @@ class EliteOutfitBuilder {
     if (newIndex < 0 || newIndex >= this.outfits.length) return;
 
     this.currentIndex = newIndex;
+
+    // Color-variant outfits land on their default color; tapping a swatch changes it
+    const outfit = this.outfits[this.currentIndex];
+    if (outfit.hasColorVariants && outfit.currentColor !== outfit.defaultColor) {
+      outfit.currentColor = outfit.defaultColor;
+      outfit.file = outfit.colorVariants[outfit.defaultColor].file;
+      outfit.comboFile = outfit.colorVariants[outfit.defaultColor].comboFile;
+    }
+
     this.updateCarouselDisplay();
+    this.updateComboImage();
     this.hideDetails();
   }
 
@@ -320,16 +307,13 @@ class EliteOutfitBuilder {
     } else {
       this.colorSwatches.hidden = true;
     }
-
-    // Visual indicator if this is the selected item
-    this.carouselItem.classList.toggle('is-current-selection', this.currentIndex === this.selectedIndex);
   }
 
   /**
-   * Update combo/preview image (only called on click)
+   * Update combo/preview image to match the current carousel outfit
    */
   updateComboImage() {
-    const outfit = this.outfits[this.selectedIndex];
+    const outfit = this.outfits[this.currentIndex];
 
     this.previewImage.classList.add('is-loading');
     const src = `${this.basePath}/combo/${encodeURIComponent(outfit.comboFile)}`;
